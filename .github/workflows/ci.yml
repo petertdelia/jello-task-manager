@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  pull_request:
+    branches:
+      - "main"
+  schedule:
+    - cron: "0 21 * * *"
+
+jobs:
+  lint-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Server Modules
+        run: npm --prefix ./server install
+      - name: Run ESLint
+        run: npx eslint ./server/ --ext .js,.jsx,.ts,.tsx
+
+  lint-client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Client Modules
+        run: npm --prefix ./client install
+      - name: Run ESLint
+        run: npx eslint ./client/ --ext .js,.jsx,.ts,.tsx

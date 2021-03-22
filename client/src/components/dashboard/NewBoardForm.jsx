@@ -1,10 +1,10 @@
-import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
-import useInput from "../../hooks/useInput";
-import * as actions from "../../actions/BoardActions";
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import useInput from '../../hooks/useInput';
+import * as actions from '../../actions/BoardActions';
 
 const NewBoardForm = (props) => {
-  const { value: title, bind: bindTitle } = useInput("");
+  const { value: title, bind: bindTitle } = useInput('');
 
   const dispatch = useDispatch();
 
@@ -12,7 +12,7 @@ const NewBoardForm = (props) => {
     (newBoard, callback) => {
       dispatch(actions.createBoard(newBoard, callback));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const handleSubmit = useCallback(
@@ -21,9 +21,9 @@ const NewBoardForm = (props) => {
       e.stopPropagation();
 
       const newBoard = { title };
-      createBoard(newBoard, props.onCloseClick(new Event("click")));
+      createBoard(newBoard, props.onCloseClick(new Event('click')));
     },
-    [createBoard, props, title]
+    [createBoard, props, title],
   );
 
   return (
@@ -34,7 +34,7 @@ const NewBoardForm = (props) => {
           href="#"
           className="icon-sm icon-close"
           onClick={props.onCloseClick}
-        ></a>
+        />
       </header>
       <div className="content">
         <form onSubmit={handleSubmit}>

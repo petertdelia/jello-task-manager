@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
-import BoardTile from "./BoardTile";
-import { useSelector, useDispatch } from "react-redux";
-import * as actions from "../../actions/BoardActions";
-import CreateBoardTile from "./CreateBoardTile";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import BoardTile from './BoardTile';
+import * as actions from '../../actions/BoardActions';
+import CreateBoardTile from './CreateBoardTile';
 
 const BoardsDashboard = (props) => {
   const boards = useSelector((state) => state.boards);
 
-  const boardTiles = boards.map((board) => {
-    return <BoardTile key={board._id} title={board.title} id={board._id} />;
-  });
+  const boardTiles = boards.map((board) => <BoardTile key={board._id} title={board.title} id={board._id} />);
 
   const dispatch = useDispatch();
 
@@ -22,7 +20,7 @@ const BoardsDashboard = (props) => {
       <section className="board-group">
         <header>
           <div className="board-section-logo">
-            <span className="person-logo"></span>
+            <span className="person-logo" />
           </div>
           <h2>Personal Boards</h2>
         </header>

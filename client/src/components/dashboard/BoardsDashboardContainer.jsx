@@ -1,7 +1,7 @@
-import React, { useReducer } from "react";
-import BoardsDashboard from "./BoardsDashboard";
-import Popover from "../shared/Popover";
-import NewBoardForm from "./NewBoardForm";
+import React, { useReducer } from 'react';
+import BoardsDashboard from './BoardsDashboard';
+import Popover from '../shared/Popover';
+import NewBoardForm from './NewBoardForm';
 
 const BoardsDashboardContainer = () => {
   const reducer = (prevState, updatedProperty) => ({
@@ -24,7 +24,7 @@ const BoardsDashboardContainer = () => {
       popover: {
         visible: true,
         attachedTo: e.currentTarget,
-        type: "new-board",
+        type: 'new-board',
       },
     });
   };
@@ -37,7 +37,7 @@ const BoardsDashboardContainer = () => {
   return (
     <div>
       <BoardsDashboard onNewBoardClick={handleNewBoardClick} />
-      <Popover {...state.popover} coverTarget={true}>
+      <Popover {...state.popover} coverTarget>
         <NewBoardForm onCloseClick={handleClosePopoverClick} />
       </Popover>
     </div>
