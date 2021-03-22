@@ -1,60 +1,61 @@
-import React from "react";
-import Pikaday from "pikaday";
-import moment from "moment";
+import React from 'react';
+import Pikaday from 'pikaday';
+import moment from 'moment';
 
 class DueDatePopover extends React.Component {
   componentDidMount() {
     this.picker = new Pikaday({
-      field: document.querySelector(".datepicker-select-date input"),
+      field: document.querySelector('.datepicker-select-date input'),
       bound: false,
-      container: document.getElementById("calendar-widget"),
+      container: document.getElementById('calendar-widget'),
       firstDay: 1,
       yearRange: 10,
       defaultDate: moment()
-        .add(1, "day")
+        .add(1, 'day')
         .toDate(),
       setDefaultDate: true,
-      format: "M/D/YYYY",
+      format: 'M/D/YYYY',
       i18n: {
-        previousMonth: "Prev",
-        nextMonth: "Next",
+        previousMonth: 'Prev',
+        nextMonth: 'Next',
         months: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December"
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
         ],
         weekdays: [
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday"
+          'Sunday',
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday',
         ],
-        weekdaysShort: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+        weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
       },
       toString(date, format) {
         return moment(date).format(format);
-      }
+      },
     });
     this.picker.show();
   }
+
   render() {
     return (
       <div className="popover due-date">
         <header>
           <span>Change due date</span>
-          <a href="#" className="icon-sm icon-close"></a>
+          <a href="#" className="icon-sm icon-close" />
         </header>
         <div className="content">
           <form>
@@ -75,7 +76,7 @@ class DueDatePopover extends React.Component {
                   />
                 </label>
               </div>
-              <div id="calendar-widget"></div>
+              <div id="calendar-widget" />
             </div>
             <button className="button" type="submit">
               Save

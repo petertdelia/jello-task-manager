@@ -4,7 +4,6 @@
     "es2020": true
   },
   "extends": [
-    "plugin:cypress/recommended",
     "plugin:react/recommended",
     "airbnb"
   ],

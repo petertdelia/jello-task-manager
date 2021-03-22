@@ -1,5 +1,5 @@
-import { combineReducers } from "redux";
-import boards from "./boards";
+import { combineReducers } from 'redux';
+import boards from './boards';
 
 const rootReducer = combineReducers({ boards });
 
