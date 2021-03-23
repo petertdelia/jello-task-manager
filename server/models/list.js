@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const ListSchema = new Schema({
-  _id = Schema.Types.ObjectId,
   title: {
     type: String,
     required: [true, 'The List must have a title'],
