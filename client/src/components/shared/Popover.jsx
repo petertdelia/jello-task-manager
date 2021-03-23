@@ -93,7 +93,7 @@ class Popover extends React.Component {
       )
     });
 
-    this.setState({
+    this.setState({ 
       position: targetLocation
     });
   };
