@@ -10,11 +10,9 @@ const CardSchema = new Schema({
   },
   description: String,
   labels: [ { type: String } ],
-  listId: Number,
-  position: Number, // Are we sure what this is?
+  listId: { type: Schema.Types.ObjectId, ref: 'List' },
+  position: Number,
   archived: Boolean,
-  createdAt: Date,
-  updatedAt: Date,
   dueDate: Date,
   completed: Boolean,
   boardId: Number,
@@ -28,7 +26,7 @@ const CardSchema = new Schema({
       cardId: Number
     }
   ]
-})
+}, { timestamps: true })
 
 const Card = mongoose.model('Card', CardSchema);
 
