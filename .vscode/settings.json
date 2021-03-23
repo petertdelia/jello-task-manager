@@ -14,5 +14,8 @@
     "source.fixAll": true
   },
   "eslint.validate": ["javascript", "typescript"],
-  "eslint.lintTask.enable": true
+  "eslint.lintTask.enable": true,
+  "eslint.options": { 
+    "configFile": "client/.eslintrc.json"
+  }
 }

@@ -15,7 +15,7 @@ jobs:
       - name: Install Server Modules
         run: npm --prefix ./server install
       - name: Run ESLint
-        run: npx eslint ./server/ --ext .js,.jsx,.ts,.tsx
+        run: npx eslint ./server/ --ext .js,.jsx,.ts,.tsx -c ./client/.eslintrc.json
 
   lint-client:
     runs-on: ubuntu-latest
