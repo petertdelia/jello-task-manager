@@ -2,6 +2,9 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import TopNav from './shared/TopNav';
 import BoardsDashboardContainer from './dashboard/BoardsDashboardContainer';
+import Boards from './dashboard/Boards';
+
+// Static helper UI imports
 import UISection from './ui/UISection';
 import AllBoards from './ui/AllBoards';
 import CardArchived from './ui/CardArchived';
@@ -18,6 +21,9 @@ const Application = () => (
   <div>
     <TopNav />
     <Route path="/" exact component={BoardsDashboardContainer} />
+    <Route path="/boards/:id" exact component={Board} />
+
+    {/* Static helper UI routes */}
     <Route path="/ui" exact component={UISection} />
     <Route path="/ui/allBoards" component={AllBoards} />
     <Route path="/ui/cardArchived" component={CardArchived} />
