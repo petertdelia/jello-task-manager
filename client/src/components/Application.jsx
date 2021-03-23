@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import TopNav from './shared/TopNav';
 import BoardsDashboardContainer from './dashboard/BoardsDashboardContainer';
-import Boards from './dashboard/Boards';
+import Board from './dashboard/Board';
 
 // Static helper UI imports
 import UISection from './ui/UISection';
