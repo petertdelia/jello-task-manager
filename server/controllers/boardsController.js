@@ -24,7 +24,8 @@ const getBoard = (req, res, next) => {
     })
     .then((board) => {
       res.json({ board });
-    });
+    })
+    .catch((err) => next(new HttpError('There is no board having that ID, please try again', 404)));
 };
 
 const createBoard = (req, res, next) => {
