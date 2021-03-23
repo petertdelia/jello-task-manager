@@ -9,7 +9,8 @@ const ListSchema = new Schema({
   },
   position: Number,
   boardId: { type: Schema.Types.ObjectId, ref: 'Board' },
-  cards: [{ type: Schema.Types.ObjectId, ref: 'Card' }]
+  cards: [{ type: Schema.Types.ObjectId, ref: 'Card' }],
+  versionKey: false
 }, { timestamps: true }) // gives us createdAt and updatedAt
 
 

@@ -1,5 +1,7 @@
 const { validationResult } = require('express-validator');
 const Board = require('../models/board');
+const List = require('../models/list');
+const Card = require('../models/card');
 const HttpError = require('../models/httpError');
 
 const getBoards = (req, res, next) => {
@@ -13,9 +15,15 @@ const getBoards = (req, res, next) => {
 
 const getBoard = (req, res, next) => {
   Board.findOne({ _id: req.params.id })
+    .populate({
+      path: 'lists',
+      populate: {
+        path: 'cards',
+        model: 'Card'
+      }
+    })
     .then((board) => {
       res.json({ board });
-      console.log("this worked!");
     });
 };
 

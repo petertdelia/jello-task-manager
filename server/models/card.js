@@ -24,7 +24,8 @@ const CardSchema = new Schema({
       updatedAt: Date,
       cardId: Number
     }
-  ]
+  ],
+  versionKey: false
 }, { timestamps: true })
 
 const Card = mongoose.model('Card', CardSchema);
