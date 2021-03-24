@@ -12,13 +12,6 @@ export default function boards(state = [], action) {
       const board = { ...action.board };
       delete board.lists;
 
-      console.log('Action board');
-      console.log(action.board);
-      console.log(
-        state
-          .filter((board) => board._id !== action.board),
-      );
-
       return state
         .filter((board) => board._id !== action.board)
         .concat(board);
