@@ -19,8 +19,8 @@ const getBoard = (req, res, next) => {
       path: 'lists',
       populate: {
         path: 'cards',
-        model: 'Card'
-      }
+        model: 'Card',
+      },
     })
     .then((board) => {
       res.json({ board });
