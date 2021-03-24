@@ -19,6 +19,13 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common.Accept = 'application/json';
 
 const apiClient = {
+  getBoard(id, callback) {
+    return axios
+      .get(`${routes.BOARDS_INDEX_URL}/${id}`)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
   getBoards(callback) {
     return axios
       .get(routes.BOARDS_INDEX_URL)
@@ -29,6 +36,20 @@ const apiClient = {
   createBoard(board, callback) {
     return axios
       .post(routes.CREATE_BOARD_URL, board)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
+  getLists(callback) {
+    return axios
+      .get(routes.LISTS_INDEX_URL)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
+  createList(list, callback) {
+    return axios
+      .post(routes.CREATE_LIST_URL, list)
       .then(unwrapData)
       .then(callback)
       .catch(logError);

@@ -45,3 +45,4 @@ const BoardsDashboardContainer = () => {
 };
 
 export default BoardsDashboardContainer;
+'';

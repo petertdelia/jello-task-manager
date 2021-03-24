@@ -15,7 +15,7 @@
   },
   "eslint.validate": ["javascript", "typescript"],
   "eslint.lintTask.enable": true,
-  "eslint.options": { 
+  "eslint.options": {
     "configFile": "client/.eslintrc.json"
   }
 }
