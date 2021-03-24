@@ -29,7 +29,6 @@ export function createBoardSuccess(board) {
 
 export function fetchBoards() {
   return function (dispatch) {
-    // TODO: Copy fetchboard
     dispatch(fetchBoardsRequest());
     apiClient.getBoards((data) => dispatch(fetchBoardsSuccess(data.boards)));
   };
@@ -39,25 +38,7 @@ export function fetchBoard(id) {
   return function (dispatch) {
     dispatch(fetchBoardRequest());
 
-    apiClient.getBoard(id, (data) => {
-      const { board } = data;
-
-      dispatch(fetchBoardSuccess(board));
-
-      // TODO:
-      // board.lists = board.lists.map((list) => {
-      //   dispatch(CardActions.fetchCardsSuccess(list.cards));
-
-      //   // eslint-disable-next-line no-param-reassign
-      //   delete list.cards;
-      //   return list;
-      // });
-
-      // dispatch(ListActions.fetchListsSuccess(board.lists));
-
-      // delete board.lists;
-      // dispatch(fetchBoardSuccess(board));
-    });
+    apiClient.getBoard(id, ({ board }) => dispatch(fetchBoardSuccess(board)));
   };
 }
 

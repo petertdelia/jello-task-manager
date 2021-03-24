@@ -6,15 +6,15 @@ export default function boards(state = [], action) {
       return action.boards;
     }
     case ActionTypes.CREATE_BOARD_SUCCESS: {
-      const newBoard = action.board;
-      return state.concat(newBoard);
+      return state.concat(action.board);
     }
     case ActionTypes.FETCH_BOARD_SUCCESS: {
-      // TODO:
-      // filter state to remove board from state
-      // remove lists from board
-      const newBoard = action.board;
-      return state.concat(newBoard);
+      const board = { ...action.board };
+      delete board.lists;
+
+      return state
+        .filter((board) => board._id !== action.board)
+        .concat(action.board);
     }
     default:
       return state;

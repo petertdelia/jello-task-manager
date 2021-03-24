@@ -8,6 +8,11 @@ const Board = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const board = useSelector((state) => state.boards).find((found) => found._id === id);
+  const lists = useSelector((state) => state.lists);
+  const cards = useSelector((state) => state.cards);
+  console.log(board);
+  console.log(lists);
+  console.log(cards);
 
   useEffect(() => {
     // TODO:
@@ -22,7 +27,7 @@ const Board = () => {
     <>
       <header>
         <ul>
-          <li id="title">My Title</li>
+          <li id="title">{board && board.title}</li>
           <li className="star-icon icon" />
           <li className="private private-icon icon">Private</li>
         </ul>
@@ -38,7 +43,7 @@ const Board = () => {
       <main>
         <div id="list-container" className="list-container">
           <div id="existing-lists" className="existing-lists">
-            <ExistingLists />
+            <ExistingLists id={id} />
           </div>
           <div id="new-list" className="new-list">
             <span>Add a list...</span>
