@@ -27,6 +27,8 @@
         ]
       }
     ],
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "no-underscore-dangle": 0,
+    "react/prop-types": 0
   }
 }
