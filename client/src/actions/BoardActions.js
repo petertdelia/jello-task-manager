@@ -39,25 +39,24 @@ export function fetchBoard(id) {
   return function (dispatch) {
     dispatch(fetchBoardRequest());
 
-    // TODO:
-    // Create the boards and cards reducers
-    // and handle the BOARD_FETCHED action in each one
-    // extracting the relevant data out of it
     apiClient.getBoard(id, (data) => {
       const { board } = data;
 
-      board.lists = board.lists.map((list) => {
-        dispatch(CardActions.fetchCardsSuccess(list.cards));
-
-        // eslint-disable-next-line no-param-reassign
-        delete list.cards;
-        return list;
-      });
-
-      dispatch(ListActions.fetchListsSuccess(board.lists));
-
-      delete board.lists;
       dispatch(fetchBoardSuccess(board));
+
+      // TODO:
+      // board.lists = board.lists.map((list) => {
+      //   dispatch(CardActions.fetchCardsSuccess(list.cards));
+
+      //   // eslint-disable-next-line no-param-reassign
+      //   delete list.cards;
+      //   return list;
+      // });
+
+      // dispatch(ListActions.fetchListsSuccess(board.lists));
+
+      // delete board.lists;
+      // dispatch(fetchBoardSuccess(board));
     });
   };
 }

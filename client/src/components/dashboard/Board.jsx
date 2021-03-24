@@ -7,9 +7,12 @@ import ExistingLists from './ExistingLists';
 const Board = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const board = useSelector((state) => state.boards).filter((found) => found._id === id)[0];
+  const board = useSelector((state) => state.boards).find((found) => found._id === id);
 
   useEffect(() => {
+    // TODO:
+    // All board info sould NOT exist at this point
+    // Fire off an api request to fetch this boards data
     if (!board) {
       dispatch(fetchBoard(id));
     }

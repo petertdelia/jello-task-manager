@@ -13,6 +13,11 @@ export default (state = [], action) => {
       const newCards = action.card;
       return state.concat(newCards);
     }
+    case ActionTypes.FETCH_BOARD_SUCCESS: {
+      // TODO:
+      // Destructure obj to extract cards and remove cards to reduce dup memory
+      // filter current state cards to prevent adding duplicate cards
+    }
     default:
       return state;
   }

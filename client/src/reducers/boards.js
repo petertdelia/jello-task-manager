@@ -10,6 +10,9 @@ export default function boards(state = [], action) {
       return state.concat(newBoard);
     }
     case ActionTypes.FETCH_BOARD_SUCCESS: {
+      // TODO:
+      // filter state to remove board from state
+      // remove lists from board
       const newBoard = action.board;
       return state.concat(newBoard);
     }
