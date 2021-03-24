@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import List from './List';
 import { fetchBoard } from '../../actions/BoardActions';
 import ExistingLists from './ExistingLists';
 

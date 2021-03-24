@@ -4,7 +4,6 @@ import List from './List';
 
 const ExistingLists = () => {
   const lists = useSelector((state) => state.lists);
-  console.log(lists);
 
   return lists.map((list) => <List list={list} key={list._id} />);
 };
