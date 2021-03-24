@@ -8,20 +8,8 @@ const Board = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const board = useSelector((state) => state.boards).find((found) => found._id === id);
-  const lists = useSelector((state) => state.lists);
-  const cards = useSelector((state) => state.cards);
-  console.log(board);
-  console.log(lists);
-  console.log(cards);
 
-  useEffect(() => {
-    // TODO:
-    // All board info sould NOT exist at this point
-    // Fire off an api request to fetch this boards data
-    if (!board) {
-      dispatch(fetchBoard(id));
-    }
-  }, []);
+  useEffect(() => dispatch(fetchBoard(id)), []);
 
   return (
     <>

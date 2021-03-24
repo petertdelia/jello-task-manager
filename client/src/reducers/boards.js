@@ -14,7 +14,7 @@ export default function boards(state = [], action) {
 
       return state
         .filter((board) => board._id !== action.board)
-        .concat(action.board);
+        .concat(board);
     }
     default:
       return state;
