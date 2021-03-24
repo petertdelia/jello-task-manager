@@ -8,6 +8,10 @@ const List = ({ list }) => {
   const [title, setTitle] = useState(list.title);
   const handleChange = ({ target }) => setTitle(target.value);
 
+  const handleBlur = () => {
+    // TODO: API REQUEST
+  };
+
   return (
     <div className="list-wrapper add-dropdown-active">
       <div className="list-background">
@@ -18,8 +22,8 @@ const List = ({ list }) => {
               type="text"
               className="list-title"
               value={title}
-              autoFocus="true"
               onChange={handleChange}
+              onBlur={handleBlur}
             />
           </div>
           <div className="add-dropdown add-top">

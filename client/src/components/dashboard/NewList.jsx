@@ -23,7 +23,6 @@ const NewList = () => {
         onClick={handleClick}
       >
         Add a list...
-
       </span>
       <input
         type="text"

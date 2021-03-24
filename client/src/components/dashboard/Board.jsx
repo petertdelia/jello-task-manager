@@ -11,12 +11,12 @@ const Board = () => {
   const dispatch = useDispatch();
   const board = useSelector((state) => state.boards).find((found) => found._id === id);
 
-  console.log('Boards');
-  console.log(useSelector((state) => state.boards));
-  console.log('Lists');
-  console.log(useSelector((state) => state.lists));
-  console.log('Cards');
-  console.log(useSelector((state) => state.cards));
+  // console.log('Boards');
+  // console.log(useSelector((state) => state.boards));
+  // console.log('Lists');
+  // console.log(useSelector((state) => state.lists));
+  // console.log('Cards');
+  // console.log(useSelector((state) => state.cards));
 
   useEffect(() => dispatch(fetchBoard(id)), []);
 
