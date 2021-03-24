@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createList } from '../../actions/ListsActions';
 
-const NewList = () => {
+const NewList = ({ id }) => {
+  const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const [newList, setNewList] = useState('');
   const handleChange = ({ target }) => setNewList(target.value);
@@ -11,7 +14,7 @@ const NewList = () => {
       return;
     }
 
-    // TODO: Api request
+    dispatch(createList({ title: newList, boardId: id }));
     setNewList('');
     setActive(false);
   };

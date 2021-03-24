@@ -2,6 +2,9 @@ import * as ActionTypes from '../constants/ActionTypes';
 
 export default (state = [], action) => {
   switch (action.type) {
+    case ActionTypes.CREATE_LIST_SUCCESS: {
+      return state.concat(action.list);
+    }
     case ActionTypes.FETCH_BOARD_SUCCESS: {
       const { lists } = action.board;
       let tempState = state;

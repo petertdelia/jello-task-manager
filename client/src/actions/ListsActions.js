@@ -24,15 +24,14 @@ export function createListSuccess(list) {
 //   };
 // }
 
-// export function createList(list, callback) {
-//   return function (dispatch) {
-//     dispatch(createListRequest());
-//     apiClient.createList(list, (data) => {
-//       dispatch(createListSuccess(data.list));
+export const createList = (list, callback) => (dispatch) => {
+  // TODO: Something is borked
+  // dispatch(createListRequest());
+  apiClient.createList(list, (data) => {
+    dispatch(createListSuccess(data.list));
 
-//       if (callback) {
-//         callback(data.list);
-//       }
-//     });
-//   };
-// }
+    if (callback) {
+      callback(data.list);
+    }
+  });
+};
