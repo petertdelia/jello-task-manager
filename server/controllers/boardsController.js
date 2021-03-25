@@ -19,7 +19,6 @@ const getBoard = (req, res, next) => {
       path: 'lists',
       populate: {
         path: 'cards',
-        model: 'Card',
       },
     })
     .then((board) => {
@@ -41,6 +40,21 @@ const createBoard = (req, res, next) => {
   }
 };
 
+const addListToBoard = async (req, res) => {
+  const { list } = req;
+  const board = await Board.findOne({ _id: list.boardId });
+
+  if (board) {
+    board.lists = board.lists.concat(list._id);
+    board.save();
+  } else {
+    list.delete();
+  }
+
+  res.json({ list });
+};
+
 exports.getBoards = getBoards;
 exports.getBoard = getBoard;
 exports.createBoard = createBoard;
+exports.addListToBoard = addListToBoard;

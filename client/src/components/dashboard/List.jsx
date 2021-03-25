@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateList } from '../../actions/ListsActions';
+
 import Card from './Card';
 
 const List = ({ list }) => {
+  const dispatch = useDispatch();
   const cards = useSelector((state) => state.cards).filter((card) => card.listId === list._id);
 
   const [title, setTitle] = useState(list.title);
   const handleChange = ({ target }) => setTitle(target.value);
+
+  const handleBlur = () => {
+    dispatch(updateList(list._id, title));
+  };
 
   return (
     <div className="list-wrapper add-dropdown-active">
@@ -18,8 +25,8 @@ const List = ({ list }) => {
               type="text"
               className="list-title"
               value={title}
-              autoFocus="true"
               onChange={handleChange}
+              onBlur={handleBlur}
             />
           </div>
           <div className="add-dropdown add-top">

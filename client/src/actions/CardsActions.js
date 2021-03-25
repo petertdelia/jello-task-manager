@@ -1,11 +1,7 @@
-import apiClient from '../lib/ApiClient';
+// import apiClient from '../lib/ApiClient';
 import * as types from '../constants/ActionTypes';
 
-export function fetchCardsSuccess(cards) {
-  return { type: types.FETCH_CARDS_SUCCESS, cards };
-}
-
-export function createCardSuccess(card) {
+export default function createCardSuccess(card) {
   return { type: types.CREATE_CARD_SUCCESS, card };
 }
 
