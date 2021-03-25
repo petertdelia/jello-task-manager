@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
+// TODO make lists required
 
 const BoardSchema = new Schema({
   title: {
@@ -8,7 +9,7 @@ const BoardSchema = new Schema({
     required: [true, 'The Board title is required'],
   },
   lists: [{ type: Schema.Types.ObjectId, ref: 'List' }],
-  versionKey: false
+  versionKey: false,
 }, { timestamps: true });
 
 const Board = mongoose.model('Board', BoardSchema);

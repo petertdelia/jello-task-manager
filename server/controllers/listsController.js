@@ -59,7 +59,20 @@ const updateList = async (req, res, next) => {
   }
 };
 
+const addCardToList = (req, res, next) => {
+  const { card } = req;
+
+  List.findById(card.listId).then((list) => {
+    list.cards = list.cards.concat(card);
+
+    list.save().then(() => {
+      res.json(card);
+    }).catch((err) => next(new HttpError('Unable to save card to list.', 404)));
+  }).catch((err) => next(new HttpError('Unable to find list.', 404)));
+};
+
 exports.getLists = getLists;
 exports.getList = getList;
 exports.createList = createList;
 exports.updateList = updateList;
+exports.addCardToList = addCardToList;
