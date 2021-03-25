@@ -7,7 +7,6 @@ import Card from './Card';
 const List = ({ list }) => {
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.cards).filter((card) => card.listId === list._id);
-
   const [title, setTitle] = useState(list.title);
   const handleChange = ({ target }) => setTitle(target.value);
 
