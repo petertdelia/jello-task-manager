@@ -66,7 +66,6 @@ const addCardToList = (req, res, next) => {
     list.cards = list.cards.concat(card);
 
     list.save().then(() => {
-      console.log(card);
       res.json(card);
     }).catch((err) => next(new HttpError('Unable to save card to list.', 404)));
   }).catch((err) => next(new HttpError('Unable to find list.', 404)));

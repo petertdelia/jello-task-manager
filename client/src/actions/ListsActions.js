@@ -11,14 +11,11 @@ export const createList = (list, callback) => (dispatch) => {
     dispatch(createListSuccess(data.list));
 
     if (callback) {
-      console.log(data);
       callback(data.list);
     }
   });
 };
 
 export const updateList = (id, title) => (dispatch) => {
-  apiClient.updateList(id, title, () => {
-    console.log(id);
-  });
+  apiClient.updateList(id, title);
 };

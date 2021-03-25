@@ -1,7 +1,6 @@
 import * as ActionTypes from '../constants/ActionTypes';
 
 export default (state = [], action) => {
-  console.log(action);
   switch (action.type) {
     case ActionTypes.BOARD_FETCHED: {
       const { lists } = action.board;

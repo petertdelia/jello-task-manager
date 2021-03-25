@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { updateList } from '../../actions/ListsActions';
 import { createCard } from '../../actions/CardsActions';
 
@@ -7,6 +8,7 @@ import Card from './Card';
 
 const List = ({ list, active, onAddCard }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const cards = useSelector((state) => state.cards).filter((card) => card.listId === list._id);
   const [title, setTitle] = useState(list.title);
   const [newCardTitle, setNewCardTitle] = useState('');
@@ -61,7 +63,12 @@ const List = ({ list, active, onAddCard }) => {
             </div>
           </div>
           <div id="cards-container" data-id="list-3-cards">
-            {cards.map((card) => <Card card={card} key={card._id} />)}
+            {cards.map((card) => (
+              <Card
+                card={card}
+                key={card._id}
+              />
+            ))}
           </div>
           <div className={`add-dropdown add-bottom ${active ? 'active-card' : ''}`}>
             <div className="card">
