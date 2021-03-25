@@ -7,7 +7,6 @@ export default (state = [], action) => {
       let tempState = state;
 
       lists.forEach((list) => {
-        // eslint-disable-next-line no-unused-vars
         tempState = state.filter((stateList) => stateList._id !== list._id);
       });
 
@@ -17,6 +16,9 @@ export default (state = [], action) => {
 
       return finalState;
     }
+
+    case ActionTypes.CREATE_LIST_SUCCESS:
+      return state.concat(action.list);
     default:
       return state;
   }

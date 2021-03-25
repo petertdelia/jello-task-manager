@@ -1,1 +1,0 @@
-GET http://localhost:5000/api/boards/6058c3b06fc68921488594bb

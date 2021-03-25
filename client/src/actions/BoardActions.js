@@ -29,7 +29,7 @@ export function createBoard(board, callback) {
   return function (dispatch) {
     apiClient.createBoard(board, (data) => {
       dispatch(createBoardSuccess(data.board));
-
+      console.log(data);
       if (callback) {
         callback(data.board);
       }

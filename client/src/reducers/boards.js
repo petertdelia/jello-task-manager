@@ -13,7 +13,7 @@ export default function boards(state = [], action) {
       delete boardWithoutLists.lists;
 
       return state
-        .filter((board) => board._id !== action.board)
+        .filter((board) => board._id !== action.board._id)
         .concat(boardWithoutLists);
     }
     default:
