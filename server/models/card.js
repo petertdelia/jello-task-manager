@@ -9,7 +9,7 @@ const CardSchema = new Schema({
   },
   description: String,
   labels: [{ type: String }],
-  listId: { type: Schema.Types.ObjectId, ref: 'List' },
+  listId: { type: Schema.Types.ObjectId, ref: 'List', required: [true, 'The card must belong to a list'] },
   position: Number,
   archived: Boolean,
   dueDate: Date,
