@@ -16,12 +16,14 @@ import DueDatePopover from './ui/DueDatePopover';
 import LabelsPopover from './ui/LabelsPopover';
 import MoveCardPopover from './ui/MoveCardPopover';
 import SingleBoard from './ui/SingleBoard';
+import CardModal from './dashboard/CardModal';
 
 const Application = () => (
   <div>
     <TopNav />
     <Route path="/" exact component={BoardsDashboardContainer} />
     <Route path="/boards/:id" exact component={Board} />
+    <Route path="/modal" exact component={CardModal} />
 
     {/* Static helper UI routes */}
     <Route path="/ui" exact component={UISection} />

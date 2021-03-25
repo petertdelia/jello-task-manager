@@ -1,22 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoard } from '../../actions/BoardActions';
 import ExistingLists from './ExistingLists';
-import NewList from './NewList';
+
+// import CardModal from './CardModal';
 
 const Board = () => {
   const { id } = useParams();
-
   const dispatch = useDispatch();
   const board = useSelector((state) => state.boards).find((found) => found._id === id);
-
-  // console.log('Boards');
-  // console.log(useSelector((state) => state.boards));
-  // console.log('Lists');
-  // console.log(useSelector((state) => state.lists));
-  // console.log('Cards');
-  // console.log(useSelector((state) => state.cards));
+  // const [showModal, setShowModal] = useState(false);
 
   useEffect(() => dispatch(fetchBoard(id)), []);
 
@@ -42,7 +36,14 @@ const Board = () => {
           <div id="existing-lists" className="existing-lists">
             <ExistingLists id={id} />
           </div>
-          <NewList id={id} />
+          <div id="new-list" className="new-list">
+            <span>Add a list...</span>
+            <input type="text" placeholder="Add a list..." />
+            <div>
+              <input type="submit" className="button" value="Save" />
+              <i className="x-icon icon" />
+            </div>
+          </div>
         </div>
       </main>
       <div className="menu-sidebar">
