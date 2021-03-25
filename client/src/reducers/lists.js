@@ -2,7 +2,7 @@ import * as ActionTypes from '../constants/ActionTypes';
 
 export default (state = [], action) => {
   switch (action.type) {
-    case ActionTypes.FETCH_BOARD_SUCCESS: {
+    case ActionTypes.BOARD_FETCHED: {
       const { lists } = action.board;
       let tempState = state;
 
@@ -12,6 +12,7 @@ export default (state = [], action) => {
       });
 
       const finalState = tempState.concat(lists).map((list) => ({ ...list }));
+      // eslint-disable-next-line no-param-reassign
       finalState.forEach((fs) => delete fs.cards);
 
       return finalState;

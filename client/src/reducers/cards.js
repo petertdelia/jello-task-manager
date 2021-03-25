@@ -2,7 +2,7 @@ import * as ActionTypes from '../constants/ActionTypes';
 
 export default (state = [], action) => {
   switch (action.type) {
-    case ActionTypes.FETCH_BOARD_SUCCESS: {
+    case ActionTypes.BOARD_FETCHED: {
       const { lists } = action.board;
       let cards = [];
       let tempState = state;
