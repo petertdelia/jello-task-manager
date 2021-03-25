@@ -1,6 +1,7 @@
 import * as ActionTypes from '../constants/ActionTypes';
 
 export default (state = [], action) => {
+  console.log(action);
   switch (action.type) {
     case ActionTypes.BOARD_FETCHED: {
       const { lists } = action.board;
@@ -12,6 +13,8 @@ export default (state = [], action) => {
 
       return cards;
     }
+    case ActionTypes.CREATE_CARD_SUCCESS:
+      return state.concat(action.card);
     default:
       return state;
   }

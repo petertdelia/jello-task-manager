@@ -15,7 +15,8 @@ const createCard = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     Card.create(req.body).then((card) => {
-      res.json(card);
+      req.card = card;
+      next();
     }).catch((err) => {
       next(new HttpError('Error creating card, please try again', 404));
     });

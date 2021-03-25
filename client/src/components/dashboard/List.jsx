@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateList } from '../../actions/ListsActions';
+import { createCard } from '../../actions/CardsActions';
 
 import Card from './Card';
 
@@ -8,7 +9,7 @@ const List = ({ list, active, onAddCard }) => {
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.cards).filter((card) => card.listId === list._id);
   const [title, setTitle] = useState(list.title);
-  const [newCard, setNewCard] = useState('');
+  const [newCardTitle, setNewCardTitle] = useState('');
 
   const handleChange = ({ target }) => setTitle(target.value);
 
@@ -22,8 +23,18 @@ const List = ({ list, active, onAddCard }) => {
     handleBlur();
   };
 
+  const handleCardTitleChange = ({ target }) => {
+    setNewCardTitle(target.value);
+  };
+
+  const handleClose = () => {
+    onAddCard(false);
+    setNewCardTitle('');
+  };
+
   const handleCreateCard = () => {
-    // dispatch()
+    dispatch(createCard({ title: newCardTitle, listId: list._id }));
+    handleClose();
   };
 
   return (
@@ -43,7 +54,7 @@ const List = ({ list, active, onAddCard }) => {
           </div>
           <div className="add-dropdown add-top">
             <div className="card" />
-            <a onClick={handleCreateCard} className="button">Add</a>
+            <a className="button">Add</a>
             <i className="x-icon icon" />
             <div className="add-options">
               <span>...</span>
@@ -55,11 +66,11 @@ const List = ({ list, active, onAddCard }) => {
           <div className={`add-dropdown add-bottom ${active ? 'active-card' : ''}`}>
             <div className="card">
               <div className="card-info" />
-              <textarea name="add-card" />
+              <textarea onChange={handleCardTitleChange} name="add-card" value={newCardTitle} />
               <div className="members" />
             </div>
-            <a className="button">Add</a>
-            <i className="x-icon icon" />
+            <a onClick={handleCreateCard} className="button">Add</a>
+            <i onClick={handleClose} className="x-icon icon" />
             <div className="add-options">
               <span>...</span>
             </div>
