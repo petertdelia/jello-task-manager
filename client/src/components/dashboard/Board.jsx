@@ -3,6 +3,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoard } from '../../actions/BoardActions';
 import ExistingLists from './ExistingLists';
+import NewList from './NewList';
 
 // import CardModal from './CardModal';
 
@@ -51,14 +52,7 @@ const Board = () => {
           <div id="existing-lists" className="existing-lists">
             <ExistingLists id={boardId} />
           </div>
-          <div id="new-list" className="new-list">
-            <span>Add a list...</span>
-            <input type="text" placeholder="Add a list..." />
-            <div>
-              <input type="submit" className="button" value="Save" />
-              <i className="x-icon icon" />
-            </div>
-          </div>
+          <NewList id={boardId} />
         </div>
       </main>
       <div className="menu-sidebar">
