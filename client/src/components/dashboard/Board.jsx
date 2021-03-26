@@ -10,17 +10,24 @@ const Board = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const location = useLocation().pathname;
-  let board;
+  let boardId;
 
-  if (location.includes('board')) {
-    board = useSelector((state) => state.boards).find((found) => found._id === id);
-  } else if (location.includes('card')) {
-    board = useSelector((state) => state.cards);
+  const card = useSelector((state) => state.cards).find((found) => found._id === id);
+
+  if (location.includes('boards')) {
+    boardId = id;
+  } else if (card) {
+    boardId = card.boardId;
   }
 
-  // const [showModal, setShowModal] = useState(false);
+  const board = useSelector((state) => state.boards).find((found) => found._id === boardId);
 
-  useEffect(() => dispatch(fetchBoard(id)), []);
+  useEffect(() => {
+    if (!boardId) { return; }
+    dispatch(fetchBoard(boardId));
+  }, [dispatch, boardId]);
+
+  if (!board) { return null; }
 
   return (
     <>
@@ -42,7 +49,7 @@ const Board = () => {
       <main>
         <div id="list-container" className="list-container">
           <div id="existing-lists" className="existing-lists">
-            <ExistingLists id={id} />
+            <ExistingLists id={boardId} />
           </div>
           <div id="new-list" className="new-list">
             <span>Add a list...</span>

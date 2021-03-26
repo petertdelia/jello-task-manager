@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCard } from '../../actions/CardsActions';
 
-export default ({ active }) =>
-// if (!active) return (<></>);
+export default () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
 
-  (
+  const card = useSelector((state) => state.cards).find((found) => found._id === id);
+  useEffect(() => dispatch(fetchCard(id)), [dispatch, id]);
+
+  if (!card) { return null; }
+
+  // TODO: add card data dynamically
+  return (
     <div id="modal-container">
       <div className="screen" />
       <div id="modal">
         <i className="x-icon icon close-modal" />
         <header>
           <i className="card-icon icon .close-modal" />
-          <textarea className="list-title" style={{ height: '45px' }}>
-            Cards do many cool things. Click on this card to open it and learn
-            more...
-          </textarea>
+          <textarea className="list-title" style={{ height: '45px' }} defaultValue="Cards do many cool things. Click on this card to open it and learn more..." />
           <p>
             in list
             {' '}
@@ -53,12 +60,12 @@ export default ({ active }) =>
                   <h3>Due Date</h3>
                   <div id="dueDateDisplay" className="overdue completed">
                     <input
-                       id="dueDateCheckbox"
-                       type="checkbox"
-                       className="checkbox"
-                       checked=""
-                     />
-                     Aug 4 at 10:42 AM
+                      id="dueDateCheckbox"
+                      type="checkbox"
+                      className="checkbox"
+                      defaultChecked=""
+                    />
+                    Aug 4 at 10:42 AM
                     {' '}
                     <span>(past due)</span>
                   </div>
@@ -92,23 +99,23 @@ export default ({ active }) =>
                 <div className="comment">
                   <label>
                     <textarea
-                       required=""
-                       rows="1"
-                       placeholder="Write a comment..."
-                     />
+                      required=""
+                      rows="1"
+                      placeholder="Write a comment..."
+                    />
                     <div>
-                       <a className="light-button card-icon sm-icon" />
-                       <a className="light-button smiley-icon sm-icon" />
-                       <a className="light-button email-icon sm-icon" />
-                       <a className="light-button attachment-icon sm-icon" />
-                     </div>
+                      <a className="light-button card-icon sm-icon" />
+                      <a className="light-button smiley-icon sm-icon" />
+                      <a className="light-button email-icon sm-icon" />
+                      <a className="light-button attachment-icon sm-icon" />
+                    </div>
                     <div>
-                       <input
+                      <input
                         type="submit"
                         className="button not-implemented"
                         value="Save"
                       />
-                     </div>
+                    </div>
                   </label>
                 </div>
               </div>
@@ -138,15 +145,13 @@ export default ({ active }) =>
                   </small>
                   <div className="comment">
                     <label>
-                       <textarea required="" rows="1">
-                        The activities have not been implemented yet.
-                      </textarea>
-                       <div>
+                      <textarea required="" rows="1" defaultValue="The activities have not been implemented yet." />
+                      <div>
                         <a className="light-button card-icon sm-icon" />
                         <a className="light-button smiley-icon sm-icon" />
                         <a className="light-button email-icon sm-icon" />
                       </div>
-                       <div>
+                      <div>
                         <p>You haven&apos;t typed anything!</p>
                         <input
                           type="submit"
@@ -155,7 +160,7 @@ export default ({ active }) =>
                         />
                         <i className="x-icon icon" />
                       </div>
-                     </label>
+                    </label>
                   </div>
                 </li>
                 <li>
@@ -189,15 +194,13 @@ export default ({ active }) =>
                   </small>
                   <div className="comment">
                     <label>
-                       <textarea required="" rows="1">
-                        Example of a comment.
-                      </textarea>
-                       <div>
+                      <textarea required="" rows="1" defaultValue="Example of a comment." />
+                      <div>
                         <a className="light-button card-icon sm-icon" />
                         <a className="light-button smiley-icon sm-icon" />
                         <a className="light-button email-icon sm-icon" />
                       </div>
-                       <div>
+                      <div>
                         <p>You haven&apos;t typed anything!</p>
                         <input
                           type="submit"
@@ -206,7 +209,7 @@ export default ({ active }) =>
                         />
                         <i className="x-icon icon" />
                       </div>
-                     </label>
+                    </label>
                   </div>
                 </li>
               </ul>
@@ -265,3 +268,4 @@ export default ({ active }) =>
       </div>
     </div>
   );
+};

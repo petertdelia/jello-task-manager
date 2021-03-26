@@ -16,3 +16,15 @@ export function createCard(card, callback) {
     });
   };
 }
+
+export function fetchCardSuccess(card) {
+  return { type: types.FETCH_CARD_SUCCESS, card };
+}
+
+export function fetchCard(id) {
+  return function (dispatch) {
+    apiClient.getCard(id, (data) => {
+      dispatch(fetchCardSuccess(data));
+    });
+  };
+}

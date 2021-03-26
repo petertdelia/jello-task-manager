@@ -14,6 +14,10 @@ export default (state = [], action) => {
     }
     case ActionTypes.CREATE_CARD_SUCCESS:
       return state.concat(action.card);
+    case ActionTypes.FETCH_CARD_SUCCESS: {
+      const otherCards = state.filter((card) => card._id !== action.card._id);
+      return otherCards.concat(action.card);
+    }
     default:
       return state;
   }
