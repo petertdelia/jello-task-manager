@@ -63,7 +63,14 @@ const List = ({ list, active, onAddCard }) => {
             </div>
           </div>
           <div id="cards-container" data-id="list-3-cards">
-            {cards.map((card) => (
+            {cards.sort((a, b) => {
+              if (a.createdAt > b.createdAt) {
+                return 1;
+              } if (a.createdAt < b.createdAt) {
+                return -1;
+              }
+              return 0;
+            }).map((card) => (
               <Card
                 card={card}
                 key={card._id}
