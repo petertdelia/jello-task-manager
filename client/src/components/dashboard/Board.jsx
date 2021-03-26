@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoard } from '../../actions/BoardActions';
 import ExistingLists from './ExistingLists';
@@ -9,7 +9,15 @@ import ExistingLists from './ExistingLists';
 const Board = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const board = useSelector((state) => state.boards).find((found) => found._id === id);
+  const location = useLocation().pathname;
+  let board;
+
+  if (location.includes('board')) {
+    board = useSelector((state) => state.boards).find((found) => found._id === id);
+  } else if (location.includes('card')) {
+    board = useSelector((state) => state.cards);
+  }
+
   // const [showModal, setShowModal] = useState(false);
 
   useEffect(() => dispatch(fetchBoard(id)), []);

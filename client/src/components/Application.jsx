@@ -22,7 +22,7 @@ const Application = () => (
   <div>
     <TopNav />
     <Route path="/" exact component={BoardsDashboardContainer} />
-    <Route path="/boards/:id" exact component={Board} />
+    <Route path="/(boards|card)/:id" exact component={Board} />
     <Route path="/card/:id" exact component={CardModal} />
 
     {/* Static helper UI routes */}

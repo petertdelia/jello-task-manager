@@ -10,11 +10,11 @@ const CardSchema = new Schema({
   description: String,
   labels: [{ type: String }],
   listId: { type: Schema.Types.ObjectId, ref: 'List', required: [true, 'The card must belong to a list'] },
+  boardId: { type: Schema.Types.ObjectId, ref: 'Board', required: [true, 'The card must belong to a board'] },
   position: Number,
   archived: Boolean,
   dueDate: Date,
   completed: Boolean,
-  boardId: Number,
   comments: [{ type: String }], // add comments schema later
   actions: [
     {
