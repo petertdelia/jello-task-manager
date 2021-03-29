@@ -29,5 +29,25 @@ const createCard = async (req, res, next) => {
   }
 };
 
-exports.getCard = getCard;
-exports.createCard = createCard;
+const addCommentToCard = (req, res, next) => {
+  const { comment } = req;
+
+  Card.findById(comment.cardId).then((card) => {
+    card.comments = card.comments.concat(comment);
+
+    card.save().then(() => {
+      res.json(comment);
+    }).catch(() => next(new HttpError('Unable to save comment to card.', 404)));
+  }).catch(() => next(new HttpError('Unable to find card.', 404)));
+};
+
+const updateCard = (req, res, next) => {
+
+}
+
+module.exports = {
+  getCard,
+  createCard,
+  addCommentToCard,
+  updateCard,
+}

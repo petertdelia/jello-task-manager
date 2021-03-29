@@ -10,23 +10,16 @@ import NewList from './NewList';
 const Board = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const location = useLocation().pathname;
-  let boardId;
-
+  const { pathname } = useLocation();
   const card = useSelector((state) => state.cards).find((found) => found._id === id);
-
-  if (location.includes('boards')) {
-    boardId = id;
-  } else if (card) {
-    boardId = card.boardId;
-  }
-
+  const boardId = pathname.includes('boards') ? id : card?.boardId;
   const board = useSelector((state) => state.boards).find((found) => found._id === boardId);
 
   useEffect(() => {
-    if (!boardId) { return; }
-    dispatch(fetchBoard(boardId));
-  }, [dispatch, boardId]);
+    if (boardId) {
+      dispatch(fetchBoard(boardId));
+    }
+  }, [boardId]);
 
   if (!board) { return null; }
 
