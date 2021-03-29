@@ -5,7 +5,7 @@ const boardsController = require('../controllers/boardsController');
 const cardsController = require('../controllers/cardsController');
 const listsController = require('../controllers/listsController');
 const commentsController = require('../controllers/commentsController');
-const { validateBoard, validateList, validateCard, validateComment } = require('../validators/validators');
+const { validateBoard, validateList, validateCard, validateComment, validateCardUpdate } = require('../validators/validators');
 
 router.get('/boards', boardsController.getBoards);
 router.post('/boards', validateBoard, boardsController.createBoard);
@@ -17,7 +17,7 @@ router.put('/lists/:id', listsController.updateList);
 
 router.get('/cards/:id', cardsController.getCard);
 router.post('/cards', validateCard, cardsController.createCard, listsController.addCardToList);
-router.put('/cards/:id', cardsController.updateCard);
+router.put('/cards/:id', validateCardUpdate, cardsController.updateCard);
 
 router.post('/comments', validateComment, commentsController.createComment, cardsController.addCommentToCard);
 
