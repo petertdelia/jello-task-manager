@@ -18,6 +18,7 @@ export default (state = [], action) => {
       const otherCards = state.filter((card) => card._id !== action.card._id);
       return otherCards.concat(action.card);
     }
+    
     default:
       return state;
   }

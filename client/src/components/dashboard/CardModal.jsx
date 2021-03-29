@@ -1,13 +1,21 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCard } from '../../actions/CardsActions';
 
 export default () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const card = useSelector((state) => state.cards).find((found) => found._id === id);
+  const [cardTitle, setCardTitle] = useState(card?.title || "");
+
+  const handleTitleChange = ({ target: value }) => setCardTitle(value);
+  const handleTitleFocusLoss = () => { }
+  const handleExitModal = () => {
+    history.push(`/boards/${card.boardId}`);
+  }
+
   useEffect(() => dispatch(fetchCard(id)), [dispatch, id]);
 
   if (!card) { return null; }
@@ -15,12 +23,12 @@ export default () => {
   // TODO: add card data dynamically
   return (
     <div id="modal-container">
-      <div className="screen" />
+      <div className="screen" onClick={handleExitModal} />
       <div id="modal">
         <i className="x-icon icon close-modal" />
         <header>
           <i className="card-icon icon .close-modal" />
-          <textarea className="list-title" style={{ height: '45px' }} defaultValue="Cards do many cool things. Click on this card to open it and learn more..." />
+          <textarea className="list-title" style={{ height: '45px' }} defaultValue={cardTitle} onChange={handleTitleChange} onBlur={handleTitleFocusLoss} />
           <p>
             in list
             {' '}
