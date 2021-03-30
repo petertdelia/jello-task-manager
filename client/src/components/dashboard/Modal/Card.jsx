@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCard, updateCard } from '../../../actions/CardsActions';
@@ -10,6 +10,7 @@ import Activities from './Activity';
 import DescriptionForm from './DescriptionForm';
 
 export default () => {
+  const focusEl = useRef(null);
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -18,7 +19,9 @@ export default () => {
 
   const handleTitleChange = ({ target: value }) => setState({ ...state, title: value });
   const handleExitModal = () => history.push(`/boards/${card.boardId}`);
-  const handleEscKeyPress = (e) => { if (e.key === 'Escape') handleExitModal(); };
+  const handleEscKeyPress = (e) => {
+    if (e.key === 'Escape') handleExitModal();
+  };
 
   const update = (_card) => {
     dispatch(updateCard(_card));
@@ -30,14 +33,15 @@ export default () => {
   useEffect(() => {
     // eslint-disable-next-line no-unused-expressions
     card ? setState(card) : dispatch(fetchCard(id));
+    focusEl.current.focus();
   }, [dispatch, id, card]);
 
   if (!card) { return null; }
 
   return (
-    <div id="modal-container" onKeyDown={handleEscKeyPress} tabIndex="-1">
+    <div id="modal-container" onKeyDown={handleEscKeyPress} tabIndex="-1" ref={focusEl}>
       <div className="screen" onClick={handleExitModal} />
-      <div id="modal">
+      <div id="modal" >
         <i className="x-icon icon close-modal" onClick={handleExitModal} />
         <header>
           <i className="card-icon icon .close-modal" />
@@ -129,6 +133,6 @@ export default () => {
         </section>
         <Actions card={card} updateCard={update} />
       </div>
-    </div>
+    </div >
   );
 };

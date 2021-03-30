@@ -8,7 +8,9 @@ import Card from './Card';
 
 const List = ({ list, active, onAddCard }) => {
   const dispatch = useDispatch();
-  const cards = useSelector((state) => state.cards).filter((card) => card.listId === list._id);
+  const cards = useSelector((state) => state.cards).filter((card) => {
+    return card.listId === list._id && !card.archived;
+  });
   const [title, setTitle] = useState(list.title);
   const [newCardTitle, setNewCardTitle] = useState('');
 
