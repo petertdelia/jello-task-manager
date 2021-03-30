@@ -1,0 +1,59 @@
+import React from 'react';
+
+const Actions = () => {
+  console.log('actions');
+
+  return (
+    <aside className="modal-buttons">
+      <h2>Add</h2>
+      <ul>
+        <li className="member-button">
+          <i className="person-icon sm-icon" />
+          Members
+        </li>
+        <li className="label-button">
+          <i className="label-icon sm-icon" />
+          Labels
+        </li>
+        <li className="checklist-button">
+          <i className="checklist-icon sm-icon" />
+          Checklist
+        </li>
+        <li className="date-button not-implemented">
+          <i className="clock-icon sm-icon" />
+          Due Date
+        </li>
+        <li className="attachment-button not-implemented">
+          <i className="attachment-icon sm-icon" />
+          Attachment
+        </li>
+      </ul>
+      <h2>Actions</h2>
+      <ul>
+        <li className="move-button">
+          <i className="forward-icon sm-icon" />
+          Move
+        </li>
+        <li className="copy-button">
+          <i className="card-icon sm-icon" />
+          Copy
+        </li>
+        <li className="subscribe-button">
+          <i className="sub-icon sm-icon" />
+          Subscribe
+          <i className="check-icon sm-icon" />
+        </li>
+        <hr />
+        <li className="archive-button">
+          <i className="file-icon sm-icon " />
+          Archive
+        </li>
+      </ul>
+      <ul className="light-list">
+        <li className="not-implemented">Share and more...</li>
+      </ul>
+    </aside>
+  );
+};
+
+export default Actions;
