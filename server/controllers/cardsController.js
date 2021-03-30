@@ -44,13 +44,14 @@ const addCommentToCard = (req, res, next) => {
 const updateCard = (req, res, next) => {
   const filter = { _id: req.params.id };
   const update = { ...req.body.card };
-  Card.findOneAndUpdate(filter, update).then(card => res.json(card));
-  
-}
+  const opts = { returnOriginal: false };
+
+  Card.findOneAndUpdate(filter, update, opts).then((card) => res.json(card));
+};
 
 module.exports = {
   getCard,
   createCard,
   addCommentToCard,
   updateCard,
-}
+};

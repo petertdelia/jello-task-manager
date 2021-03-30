@@ -1,34 +1,41 @@
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCard } from '../../actions/CardsActions';
+import { fetchCard, updateCard } from '../../actions/CardsActions';
 
 export default () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
   const card = useSelector((state) => state.cards).find((found) => found._id === id);
-  const [cardTitle, setCardTitle] = useState(card?.title || "");
+  const [state, setState] = useState({});
 
-  const handleTitleChange = ({ target: value }) => setCardTitle(value);
-  const handleTitleFocusLoss = () => { }
-  const handleExitModal = () => {
-    history.push(`/boards/${card.boardId}`);
-  }
+  const handleTitleChange = ({ target: value }) => setState({ ...state, title: value });
+  const handleExitModal = () => history.push(`/boards/${card.boardId}`);
+  const handleEscKeyPress = (e) => { if (e.key === 'Escape') handleExitModal(); };
 
-  useEffect(() => dispatch(fetchCard(id)), [dispatch, id]);
+  const handleTitleBlur = (e) => {
+    dispatch(updateCard({ ...card, title: e.target.value }));
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-expressions
+    card ? setState(card) : dispatch(fetchCard(id));
+  }, [dispatch, id, card]);
 
   if (!card) { return null; }
 
-  // TODO: add card data dynamically
   return (
-    <div id="modal-container">
+    <div id="modal-container" onKeyDown={handleEscKeyPress} tabIndex="-1">
       <div className="screen" onClick={handleExitModal} />
       <div id="modal">
-        <i className="x-icon icon close-modal" />
+        <i className="x-icon icon close-modal" onClick={handleExitModal} />
         <header>
           <i className="card-icon icon .close-modal" />
-          <textarea className="list-title" style={{ height: '45px' }} defaultValue={cardTitle} onChange={handleTitleChange} onBlur={handleTitleFocusLoss} />
+          <textarea className="list-title" style={{ height: '45px' }} defaultValue={state.title} onChange={handleTitleChange} onBlur={handleTitleBlur} />
           <p>
             in list
             {' '}

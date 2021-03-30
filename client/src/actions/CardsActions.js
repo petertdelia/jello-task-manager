@@ -28,3 +28,11 @@ export function fetchCard(id) {
     });
   };
 }
+
+export function updateCard(card) {
+  return function (dispatch) {
+    apiClient.updateCard(card, (data) => {
+      dispatch(fetchCardSuccess(data));
+    });
+  };
+}
