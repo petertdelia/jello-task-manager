@@ -8,7 +8,6 @@ import Card from './Card';
 
 const List = ({ list, active, onAddCard }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const cards = useSelector((state) => state.cards).filter((card) => card.listId === list._id);
   const [title, setTitle] = useState(list.title);
   const [newCardTitle, setNewCardTitle] = useState('');

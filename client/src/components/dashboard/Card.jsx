@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 const Card = ({ card }) => {
   const history = useHistory();
   const handleModalOpen = () => {
-    history.push(`/card/${card._id}`);
+    history.push(`/cards/${card._id}`);
   };
 
   return (

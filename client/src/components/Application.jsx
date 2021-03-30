@@ -22,8 +22,8 @@ const Application = () => (
   <div>
     <TopNav />
     <Route path="/" exact component={BoardsDashboardContainer} />
-    <Route path="/(boards|card)/:id" exact component={Board} />
-    <Route path="/card/:id" exact component={CardModal} />
+    <Route path="/(boards|cards)/:id" exact component={Board} />
+    <Route path="/cards/:id" exact component={CardModal} />
 
     {/* Static helper UI routes */}
     <Route path="/ui" exact component={UISection} />
