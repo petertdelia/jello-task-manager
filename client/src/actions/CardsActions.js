@@ -36,3 +36,19 @@ export function updateCard(card) {
     });
   };
 }
+
+export function createCommentSuccess(comment) {
+  return { type: types.CREATE_COMMENT_SUCCESS, comment };
+}
+
+export function createComment(comment, callback) {
+  return function (dispatch) {
+    apiClient.createComment(comment, (data) => {
+      dispatch(createCommentSuccess(data));
+
+      if (callback) {
+        callback(data.comment);
+      }
+    });
+  };
+}

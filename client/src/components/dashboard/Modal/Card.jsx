@@ -4,9 +4,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCard, updateCard } from '../../../actions/CardsActions';
+import { fetchCard, updateCard, createComment } from '../../../actions/CardsActions';
 import Actions from './Actions';
-import Activities from './Activity';
+import Activity from './Activity';
 import DescriptionForm from './DescriptionForm';
 
 export default () => {
@@ -16,12 +16,18 @@ export default () => {
   const history = useHistory();
   const card = useSelector((state) => state.cards).find((found) => found._id === id);
   const [state, setState] = useState({});
+  const [newComment, setNewComment] = useState("");
 
   const handleTitleChange = ({ target: value }) => setState({ ...state, title: value });
   const handleExitModal = () => history.push(`/boards/${card.boardId}`);
   const handleEscKeyPress = (e) => {
     if (e.key === 'Escape') handleExitModal();
   };
+
+  const handleSaveComment = () => {
+    console.log({ cardId: card._id, comment: { text: newComment } });
+    dispatch(createComment({ cardId: card._id, comment: { text: newComment } }));
+  }
 
   const update = (_card) => {
     dispatch(updateCard(_card));
@@ -33,7 +39,7 @@ export default () => {
   useEffect(() => {
     // eslint-disable-next-line no-unused-expressions
     card ? setState(card) : dispatch(fetchCard(id));
-    focusEl.current.focus();
+    focusEl.current?.focus();
   }, [dispatch, id, card]);
 
   if (!card) { return null; }
@@ -110,6 +116,7 @@ export default () => {
                       required=""
                       rows="1"
                       placeholder="Write a comment..."
+                      onChange={e => setNewComment(e.target.value)}
                     />
                     <div>
                       <a className="light-button card-icon sm-icon" />
@@ -120,15 +127,16 @@ export default () => {
                     <div>
                       <input
                         type="submit"
-                        className="button not-implemented"
+                        className="button"
                         value="Save"
+                        onClick={handleSaveComment}
                       />
                     </div>
                   </label>
                 </div>
               </div>
             </li>
-            <Activities />
+            <Activity card={card} />
           </ul>
         </section>
         <Actions card={card} updateCard={update} />

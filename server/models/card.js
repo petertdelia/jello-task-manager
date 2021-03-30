@@ -15,7 +15,7 @@ const CardSchema = new Schema({
   archived: Boolean,
   dueDate: Date,
   completed: Boolean,
-  comments: [{ type: String }], // add comments schema later
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }], // add comments schema later
   actions: [
     {
       _id: Number,
