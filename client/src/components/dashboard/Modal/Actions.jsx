@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Actions = () => {
-  console.log('actions');
+const Actions = ({ card, updateCard }) => {
+  const [isArchived, setIsArchived] = useState(card.archived || false);
+
+  const handleToggleArchive = (toArchive) => {
+    updateCard({ ...card, archived: toArchive });
+    setIsArchived(toArchive);
+  };
 
   return (
     <aside className="modal-buttons">
@@ -44,10 +49,25 @@ const Actions = () => {
           <i className="check-icon sm-icon" />
         </li>
         <hr />
-        <li className="archive-button">
-          <i className="file-icon sm-icon " />
-          Archive
-        </li>
+
+        {!isArchived ? (
+          <li className="archive-button" onClick={() => handleToggleArchive(true)}>
+            <i className="file-icon sm-icon " />
+            Archive
+          </li>
+        ) : (
+          <>
+            <li className="unarchive-button" onClick={() => handleToggleArchive(false)}>
+              <i className="send-icon sm-icon" />
+              Send to board
+            </li>
+            <li className="red-button">
+              <i className="minus-icon sm-icon" />
+              Delete
+            </li>
+          </>
+        ) }
+
       </ul>
       <ul className="light-list">
         <li className="not-implemented">Share and more...</li>

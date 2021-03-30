@@ -127,7 +127,7 @@ export default () => {
             <Activities />
           </ul>
         </section>
-        <Actions />
+        <Actions card={card} updateCard={update} />
       </div>
     </div>
   );
