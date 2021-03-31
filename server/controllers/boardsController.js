@@ -19,12 +19,13 @@ const getBoard = (req, res, next) => {
       path: 'lists',
       populate: {
         path: 'cards',
+        populate: 'comments',
       },
     })
     .then((board) => {
       res.json({ board });
     })
-    .catch((err) => next(new HttpError('There is no board having that ID, please try again', 404)));
+    .catch((err) => next(new HttpError(err, 404)));
 };
 
 const createBoard = (req, res, next) => {

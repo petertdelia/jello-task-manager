@@ -4,7 +4,7 @@ const Card = require('../models/card');
 const List = require('../models/list');
 
 const getCard = (req, res, next) => {
-  Card.findById(req.params.id).then((card) => {
+  Card.findById(req.params.id).populate({ path: 'comments' }).then((card) => {
     res.json(card);
   }).catch(() => {
     next(new HttpError('There is no card having that ID, please try again', 404));

@@ -19,8 +19,8 @@ export default (state = [], action) => {
       return otherCards.concat(action.card);
     }
     case ActionTypes.CREATE_COMMENT_SUCCESS: {
-      return state.map(card => {
-        if (card._id === action.cardId) {
+      return state.map((card) => {
+        if (card._id === action.comment.cardId) {
           card.comments = card.comments.concat(action.comment);
         }
         return card;

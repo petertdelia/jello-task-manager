@@ -5,8 +5,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCard, updateCard, createComment } from '../../../actions/CardsActions';
-import Actions from './Actions';
-import Activity from './Activity';
+import Sidebar from './Sidebar';
+import CommentsActivities from './CommentsActivities';
 import DescriptionForm from './DescriptionForm';
 
 export default () => {
@@ -16,7 +16,7 @@ export default () => {
   const history = useHistory();
   const card = useSelector((state) => state.cards).find((found) => found._id === id);
   const [state, setState] = useState({});
-  const [newComment, setNewComment] = useState("");
+  const [newComment, setNewComment] = useState('');
 
   const handleTitleChange = ({ target: value }) => setState({ ...state, title: value });
   const handleExitModal = () => history.push(`/boards/${card.boardId}`);
@@ -25,9 +25,8 @@ export default () => {
   };
 
   const handleSaveComment = () => {
-    console.log({ cardId: card._id, comment: { text: newComment } });
     dispatch(createComment({ cardId: card._id, comment: { text: newComment } }));
-  }
+  };
 
   const update = (_card) => {
     dispatch(updateCard(_card));
@@ -39,6 +38,7 @@ export default () => {
   useEffect(() => {
     // eslint-disable-next-line no-unused-expressions
     card ? setState(card) : dispatch(fetchCard(id));
+    // TODO do not fetch comment data on board page, populate comment data here
     focusEl.current?.focus();
   }, [dispatch, id, card]);
 
@@ -47,7 +47,7 @@ export default () => {
   return (
     <div id="modal-container" onKeyDown={handleEscKeyPress} tabIndex="-1" ref={focusEl}>
       <div className="screen" onClick={handleExitModal} />
-      <div id="modal" >
+      <div id="modal">
         <i className="x-icon icon close-modal" onClick={handleExitModal} />
         <header>
           <i className="card-icon icon .close-modal" />
@@ -116,7 +116,7 @@ export default () => {
                       required=""
                       rows="1"
                       placeholder="Write a comment..."
-                      onChange={e => setNewComment(e.target.value)}
+                      onChange={(e) => setNewComment(e.target.value)}
                     />
                     <div>
                       <a className="light-button card-icon sm-icon" />
@@ -136,11 +136,11 @@ export default () => {
                 </div>
               </div>
             </li>
-            <Activity card={card} />
+            <CommentsActivities card={card} />
           </ul>
         </section>
-        <Actions card={card} updateCard={update} />
+        <Sidebar card={card} updateCard={update} />
       </div>
-    </div >
+    </div>
   );
 };

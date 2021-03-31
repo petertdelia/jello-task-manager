@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Comment = () => {
+const Comment = ({ text }) => {
   return (
     <li>
       <div className="member-container">
@@ -8,15 +8,15 @@ const Comment = () => {
       </div>
       <h3>Taylor Peat</h3>
       <div className="comment static-comment">
-        <span>The Activity are not functional.</span>
+        <span>{text}</span>
       </div>
       <small>
         22 minutes ago -
-            {' '}
+        {' '}
         <span className="link">Edit</span>
         {' '}
-            -
-            {' '}
+        -
+        {' '}
         <span className="link">Delete</span>
       </small>
       <div className="comment">
@@ -39,7 +39,7 @@ const Comment = () => {
         </label>
       </div>
     </li>
-  )
-}
+  );
+};
 
 export default Comment;
