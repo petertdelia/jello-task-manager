@@ -10,7 +10,7 @@ export default (state = [], action) => {
       // eslint-disable-next-line no-return-assign
       lists.forEach((list) => cards = cards.concat(list.cards));
 
-      return cards;
+      return cards.map((card, idx) => ({ ...card, idx }));
     }
     case ActionTypes.CREATE_CARD_SUCCESS:
       return state.concat(action.card);

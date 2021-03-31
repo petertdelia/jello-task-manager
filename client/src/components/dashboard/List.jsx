@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { useDrop } from 'react-dnd';
 import { updateList, deleteList } from '../../actions/ListsActions';
 import { createCard } from '../../actions/CardsActions';
 
@@ -45,6 +46,17 @@ const List = ({ list, active, onAddCard }) => {
     }
   };
 
+  const [{ canDrop, isOver }, drop] = useDrop(() => ({
+    accept: 'CARD',
+    drop: () => console.log('dropped!', cards),
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  }), [cards]);
+
+  console.log('options', { canDrop, isOver });
+
   return (
     <div className={`list-wrapper ${active ? 'add-dropdown-active' : ''}`}>
       <div className="list-background">
@@ -68,7 +80,7 @@ const List = ({ list, active, onAddCard }) => {
               <span>...</span>
             </div>
           </div>
-          <div id="cards-container" data-id="list-3-cards">
+          <div id="cards-container" data-id="list-3-cards" ref={drop}>
             {cards.sort((a, b) => {
               if (a.createdAt > b.createdAt) {
                 return 1;
