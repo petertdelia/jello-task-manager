@@ -54,7 +54,7 @@ const deleteList = async (req, res) => {
       });
     });
     await list.remove();
-    res.json({ status: 'ok' });
+    return res.json({ status: 'ok' });
   }
   res.json({ status: "Couldn't find list" });
 };
