@@ -89,6 +89,13 @@ const apiClient = {
       .then(callback)
       .catch(logError);
   },
+  deleteList(list, callback) {
+    return axios
+      .delete(`${routes.DELETE_LIST_URL}/${list}`)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
 };
 
 export default apiClient;

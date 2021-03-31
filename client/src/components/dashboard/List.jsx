@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { updateList } from '../../actions/ListsActions';
+import { updateList, deleteList } from '../../actions/ListsActions';
 import { createCard } from '../../actions/CardsActions';
 
 import Card from './Card';
 
 const List = ({ list, active, onAddCard }) => {
   const dispatch = useDispatch();
-  const cards = useSelector((state) => state.cards).filter((card) => {
-    return card.listId === list._id && !card.archived;
-  });
+  const cards = useSelector((state) => state.cards).filter((card) => card.listId === list._id && !card.archived);
   const [title, setTitle] = useState(list.title);
   const [newCardTitle, setNewCardTitle] = useState('');
 
@@ -40,11 +38,18 @@ const List = ({ list, active, onAddCard }) => {
     handleClose();
   };
 
+  const handleDeleteList = () => {
+    if (confirm('Are you sure you want to delete this list?')) {
+      dispatch(deleteList(list._id), () => {
+      });
+    }
+  };
+
   return (
     <div className={`list-wrapper ${active ? 'add-dropdown-active' : ''}`}>
       <div className="list-background">
         <div className="list">
-          <a className="more-icon sm-icon" href="" />
+          <a className="x-icon icon" onClick={handleDeleteList} />
           <div>
             <input
               type="text"
@@ -58,7 +63,7 @@ const List = ({ list, active, onAddCard }) => {
           <div className="add-dropdown add-top">
             <div className="card" />
             <a className="button">Add</a>
-            <i className="x-icon icon" />
+            <i className="more-icon sm-icon" />
             <div className="add-options">
               <span>...</span>
             </div>

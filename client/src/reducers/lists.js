@@ -7,7 +7,7 @@ export default (state = [], action) => {
       let tempState = state;
 
       lists.forEach((list) => {
-        tempState = state.filter((stateList) => stateList._id !== list._id);
+        tempState = tempState.filter((stateList) => stateList._id !== list._id);
       });
 
       const finalState = tempState.concat(lists).map((list) => ({ ...list }));
@@ -15,6 +15,10 @@ export default (state = [], action) => {
       finalState.forEach((fs) => delete fs.cards);
 
       return finalState;
+    }
+
+    case ActionTypes.DELETE_LIST_SUCCESS: {
+      return state.filter((list) => list._id !== action._id);
     }
 
     case ActionTypes.CREATE_LIST_SUCCESS:

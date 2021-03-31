@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 const Board = require('../models/board');
 const List = require('../models/list');
 const Card = require('../models/card');
+const Comment = require('../models/comment');
 const HttpError = require('../models/httpError');
 
 const getLists = (req, res, next) => {
@@ -43,6 +44,21 @@ const createList = (req, res, next) => {
   }
 };
 
+const deleteList = async (req, res) => {
+  const list = await List.findById(req.params.id);
+
+  if (list) {
+    list.cards.forEach((cardId) => {
+      Card.findById(cardId).then((card) => {
+        if (card) { card.remove(); }
+      });
+    });
+    await list.remove();
+    res.json({ status: 'ok' });
+  }
+  res.json({ status: "Couldn't find list" });
+};
+
 const updateList = async (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
@@ -71,8 +87,11 @@ const addCardToList = (req, res, next) => {
   }).catch((err) => next(new HttpError('Unable to find list.', 404)));
 };
 
-exports.getLists = getLists;
-exports.getList = getList;
-exports.createList = createList;
-exports.updateList = updateList;
-exports.addCardToList = addCardToList;
+module.exports = {
+  getLists,
+  getList,
+  createList,
+  deleteList,
+  updateList,
+  addCardToList,
+};

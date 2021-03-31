@@ -29,6 +29,13 @@ const createCard = async (req, res, next) => {
   }
 };
 
+const deleteCard = async (req, res, next) => {
+  const card = Card.findById(req.params.id);
+  card.remove().then((data) => {
+    res.json(data);
+  }).catch((err) => next(new HttpError(err, 404)));
+};
+
 const addCommentToCard = (req, res, next) => {
   const { comment } = req;
 
@@ -52,6 +59,7 @@ const updateCard = (req, res, next) => {
 module.exports = {
   getCard,
   createCard,
+  deleteCard,
   addCommentToCard,
   updateCard,
 };

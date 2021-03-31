@@ -12,8 +12,6 @@ const Activity = ({ card }) => {
     return 0;
   });
 
-  // console.log(commentsAndActions);
-
   return (
     <li className="activity-section">
       <h2 className="activity-icon icon">Activity</h2>
@@ -23,7 +21,6 @@ const Activity = ({ card }) => {
       <ul className="modal-activity-list">
         {commentsAndActions.map((listItem) => {
           if (Object.keys(listItem).includes('text')) {
-            // this is a comment
             return <Comment key={listItem._id} {...listItem} />;
           }
           return <Action key={listItem._id} {...listItem} />;
