@@ -27,16 +27,24 @@ export default (state = [], action) => {
       });
     }
     case 'UPDATE_CARD_POSTION': {
+      // TODO: Better sorting/swapping algorithm.
+
+      // dragTarget is the card the user is dragging
+      // dropTarget is the target container card we are dropping onto
       const { dragTarget, dropTarget } = action.cards;
 
       return state.map((card) => {
         if (card._id === dragTarget.id) {
-          card.position = dropTarget.position || card.position;
-          card.listId = dropTarget.listId || card.listId;
+          // 0 is a falsy value
+          card.position = dropTarget.position !== undefined
+            ? dropTarget.position
+            : card.position;
+
+          card.listId = dropTarget.listId;
         }
 
         if (card._id === dropTarget._id) {
-          card.position = dragTarget.position || card.position;
+          card.position = dragTarget.position;
         }
 
         return card;

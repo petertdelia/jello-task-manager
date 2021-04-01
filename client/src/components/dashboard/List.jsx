@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateList, deleteList } from '../../actions/ListsActions';
 import { createCard } from '../../actions/CardsActions';
 
-import DraggableCards from './Cards/DraggableCards';
+import CardsContainer from './Cards/CardsContainer';
 
 const List = ({ list, active, onAddCard }) => {
   const dispatch = useDispatch();
@@ -37,8 +37,7 @@ const List = ({ list, active, onAddCard }) => {
 
   const handleDeleteList = () => {
     if (confirm('Are you sure you want to delete this list?')) {
-      dispatch(deleteList(list._id), () => {
-      });
+      dispatch(deleteList(list._id), () => {});
     }
   };
 
@@ -66,7 +65,7 @@ const List = ({ list, active, onAddCard }) => {
             </div>
           </div>
 
-          <DraggableCards list={list} cards={cards} />
+          <CardsContainer list={list} cards={cards} />
 
           <div className={`add-dropdown add-bottom ${active ? 'active-card' : ''}`}>
             <div className="card">

@@ -1,28 +1,26 @@
 import React from 'react';
-import DropContainer from './DropContainer';
+import { useDrag } from 'react-dnd';
 import Card from './Card';
 
-const DraggableCards = ({ list, cards }) => {
-  const sortedCards = cards.sort((a, b) => {
-    if (a.position > b.position) {
-      return 1;
-    } if (a.position < b.position) {
-      return -1;
-    }
-    return 0;
+const DraggableCard = ({ card }) => {
+  const [{ isDragging }, drag] = useDrag({
+    type: 'CARD',
+    item: { id: card._id, position: card.position, listId: card.listId },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
   });
 
-  if (sortedCards.length === 0) {
-    return <DropContainer data={{ listId: list._id }} />;
-  }
+  const opacity = isDragging ? 0.4 : 1;
 
   return (
-    sortedCards.map((card) => (
-      <DropContainer data={card} key={card._id}>
-        <Card card={card} key={card._id} />
-      </DropContainer>
-    ))
+    <div
+      ref={drag}
+      style={{ opacity }}
+    >
+      <Card card={card} />
+    </div>
   );
 };
 
-export default DraggableCards;
+export default DraggableCard;

@@ -9,15 +9,12 @@ const DropContainer = ({ data, children }) => {
   const [, drop] = useDrop(() => ({
     accept: 'CARD',
     drop: (item) => {
-      dispatch(updateCardDropPosition(item, data));
+      dispatch(updateCardDropPosition(item, { ...data }));
     },
   }), [data]);
 
   return (
-
     <div
-      id="cards-container"
-      data-id="list-3-cards"
       ref={drop}
       style={{ minHeight: '15px' }}
     >
