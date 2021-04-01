@@ -1,8 +1,7 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import Card from './Card';
-import { updateCardDropPosition } from '../../actions/CardsActions';
+import { updateCardDropPosition } from '../../../actions/CardsActions';
 
 const DropContainer = ({ data, children }) => {
   const dispatch = useDispatch();
@@ -15,10 +14,15 @@ const DropContainer = ({ data, children }) => {
   }), [data]);
 
   return (
-    <div ref={drop}>
+
+    <div
+      id="cards-container"
+      data-id="list-3-cards"
+      ref={drop}
+      style={{ minHeight: '15px' }}
+    >
       {children}
     </div>
-
   );
 };
 

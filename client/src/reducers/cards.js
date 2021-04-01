@@ -31,12 +31,12 @@ export default (state = [], action) => {
 
       return state.map((card) => {
         if (card._id === dragTarget.id) {
-          card.position = dropTarget.position;
-          card.listId = dropTarget.listId;
+          card.position = dropTarget.position || card.position;
+          card.listId = dropTarget.listId || card.listId;
         }
 
         if (card._id === dropTarget._id) {
-          card.position = dragTarget.position;
+          card.position = dragTarget.position || card.position;
         }
 
         return card;

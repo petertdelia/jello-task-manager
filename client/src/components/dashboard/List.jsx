@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateList, deleteList } from '../../actions/ListsActions';
 import { createCard } from '../../actions/CardsActions';
 
-import Card from './Card';
-import DropContainer from './DropContainer';
+import DraggableCards from './Cards/DraggableCards';
 
 const List = ({ list, active, onAddCard }) => {
   const dispatch = useDispatch();
@@ -43,15 +42,6 @@ const List = ({ list, active, onAddCard }) => {
     }
   };
 
-  const sortCards = () => cards.sort((a, b) => {
-    if (a.position > b.position) {
-      return 1;
-    } if (a.position < b.position) {
-      return -1;
-    }
-    return 0;
-  });
-
   return (
     <div className={`list-wrapper ${active ? 'add-dropdown-active' : ''}`}>
       <div className="list-background">
@@ -75,13 +65,9 @@ const List = ({ list, active, onAddCard }) => {
               <span>...</span>
             </div>
           </div>
-          <div id="cards-container" data-id="list-3-cards">
-            {sortCards().map((card) => (
-              <DropContainer data={card} key={card._id}>
-                <Card card={card} key={card._id} />
-              </DropContainer>
-            ))}
-          </div>
+
+          <DraggableCards list={list} cards={cards} />
+
           <div className={`add-dropdown add-bottom ${active ? 'active-card' : ''}`}>
             <div className="card">
               <div className="card-info" />

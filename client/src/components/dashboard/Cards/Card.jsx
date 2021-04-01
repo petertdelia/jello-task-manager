@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag } from 'react-dnd';
 
 const Card = ({ card }) => {
   const [{ isDragging }, drag] = useDrag({
@@ -19,7 +19,12 @@ const Card = ({ card }) => {
   };
 
   return (
-    <div className="card-background" onClick={handleModalOpen} ref={drag} style={{ opacity }}>
+    <div
+      className="card-background"
+      onClick={handleModalOpen}
+      ref={drag}
+      style={{ opacity }}
+    >
       <div className="card ">
         <i className="edit-toggle edit-icon sm-icon" />
         <div className="cover-image" />
