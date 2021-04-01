@@ -41,6 +41,8 @@ export function createCommentSuccess(comment) {
   return { type: types.CREATE_COMMENT_SUCCESS, comment };
 }
 
+export const updateDropPositionSuccess = (cards) => ({ type: 'UPDATE_CARD_POSTION', cards });
+
 export function createComment(comment, callback) {
   return function (dispatch) {
     apiClient.createComment(comment, (data) => {
@@ -50,5 +52,11 @@ export function createComment(comment, callback) {
         callback(data.comment);
       }
     });
+  };
+}
+
+export function updateCardDropPosition(dragTarget, dropTarget) {
+  return (dispatch) => {
+    dispatch(updateDropPositionSuccess({ dragTarget, dropTarget }));
   };
 }

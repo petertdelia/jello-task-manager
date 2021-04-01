@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDrag } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd';
 
 const Card = ({ card }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'CARD',
-    name: 'some name',
-    item: { name: 'Any custom name', type: 'Irrelevant, for now' },
+    item: { id: card._id, position: card.position, listId: card.listId },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),

@@ -1,32 +1,29 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-import { useDrop } from 'react-dnd';
 import { updateList, deleteList } from '../../actions/ListsActions';
 import { createCard } from '../../actions/CardsActions';
 
 import Card from './Card';
+import DropContainer from './DropContainer';
 
 const List = ({ list, active, onAddCard }) => {
   const dispatch = useDispatch();
-  const cards = useSelector((state) => state.cards).filter((card) => card.listId === list._id && !card.archived);
   const [title, setTitle] = useState(list.title);
   const [newCardTitle, setNewCardTitle] = useState('');
+  const cards = useSelector((state) => state.cards)
+    .filter((card) => card.listId === list._id && !card.archived);
 
   const handleChange = ({ target }) => setTitle(target.value);
 
-  const handleBlur = () => {
-    dispatch(updateList(list._id, title));
-  };
+  const handleBlur = () => dispatch(updateList(list._id, title));
+  const handleCardTitleChange = ({ target }) => setNewCardTitle(target.value);
 
   const handleEnterKey = (e) => {
     if (!e.key === 'Enter') return;
 
     handleBlur();
-  };
-
-  const handleCardTitleChange = ({ target }) => {
-    setNewCardTitle(target.value);
   };
 
   const handleClose = () => {
@@ -46,16 +43,14 @@ const List = ({ list, active, onAddCard }) => {
     }
   };
 
-  const [{ canDrop, isOver }, drop] = useDrop(() => ({
-    accept: 'CARD',
-    drop: () => console.log('dropped!', cards),
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-    }),
-  }), [cards]);
-
-  console.log('options', { canDrop, isOver });
+  const sortCards = () => cards.sort((a, b) => {
+    if (a.position > b.position) {
+      return 1;
+    } if (a.position < b.position) {
+      return -1;
+    }
+    return 0;
+  });
 
   return (
     <div className={`list-wrapper ${active ? 'add-dropdown-active' : ''}`}>
@@ -80,19 +75,11 @@ const List = ({ list, active, onAddCard }) => {
               <span>...</span>
             </div>
           </div>
-          <div id="cards-container" data-id="list-3-cards" ref={drop}>
-            {cards.sort((a, b) => {
-              if (a.createdAt > b.createdAt) {
-                return 1;
-              } if (a.createdAt < b.createdAt) {
-                return -1;
-              }
-              return 0;
-            }).map((card) => (
-              <Card
-                card={card}
-                key={card._id}
-              />
+          <div id="cards-container" data-id="list-3-cards">
+            {sortCards().map((card) => (
+              <DropContainer data={card} key={card._id}>
+                <Card card={card} key={card._id} />
+              </DropContainer>
             ))}
           </div>
           <div className={`add-dropdown add-bottom ${active ? 'active-card' : ''}`}>
@@ -107,7 +94,11 @@ const List = ({ list, active, onAddCard }) => {
               <span>...</span>
             </div>
           </div>
-          <div onClick={() => onAddCard(list._id)} className="add-card-toggle" data-position="bottom">
+          <div
+            onClick={() => onAddCard(list._id)}
+            className="add-card-toggle"
+            data-position="bottom"
+          >
             Add a card...
           </div>
         </div>

@@ -10,7 +10,7 @@ export default (state = [], action) => {
       // eslint-disable-next-line no-return-assign
       lists.forEach((list) => cards = cards.concat(list.cards));
 
-      return cards.map((card, idx) => ({ ...card, idx }));
+      return cards.map((card, idx) => ({ ...card, position: idx }));
     }
     case ActionTypes.CREATE_CARD_SUCCESS:
       return state.concat(action.card);
@@ -23,6 +23,22 @@ export default (state = [], action) => {
         if (card._id === action.comment.cardId) {
           card.comments = card.comments.concat(action.comment);
         }
+        return card;
+      });
+    }
+    case 'UPDATE_CARD_POSTION': {
+      const { dragTarget, dropTarget } = action.cards;
+
+      return state.map((card) => {
+        if (card._id === dragTarget.id) {
+          card.position = dropTarget.position;
+          card.listId = dropTarget.listId;
+        }
+
+        if (card._id === dropTarget._id) {
+          card.position = dragTarget.position;
+        }
+
         return card;
       });
     }
