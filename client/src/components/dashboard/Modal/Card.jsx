@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+import moment from 'moment';
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -51,7 +52,7 @@ export default () => {
     setPopoverLocation(e.target);
   };
 
-  const onClose = () => {
+  const onPopoverClose = () => {
     setPopoverType(null);
     setPopoverLocation(null);
   };
@@ -66,6 +67,37 @@ export default () => {
   if (!card) {
     return null;
   }
+
+  const truncatedDate = () => {
+    const dueDate = new Date(state.dueDate);
+    return moment(dueDate).format('MMM DD');
+  };
+
+  const fullDate = () => {
+    const dueDate = new Date(state.dueDate);
+    return `${truncatedDate()} at ${moment(dueDate).format('LT')}`;
+  };
+
+  const dueDateComparison = () => {
+    const SINGLE_DAY = 86400000;
+    const dueDate = new Date(state.dueDate);
+    const dateDiff = Date.now() - dueDate;
+
+    if (dateDiff > 0) {
+      return (dateDiff > SINGLE_DAY) ? 'overdue' : 'overdue-recent';
+    }
+
+    return (dateDiff < SINGLE_DAY) ? 'due-soon' : '';
+  };
+
+  const isPastDue = () => {
+    const dueDate = new Date(state.dueDate);
+    const dateDiff = Date.now() - dueDate;
+
+    return (dateDiff > 0) ? ' (past due)' : '';
+  };
+
+  console.log(state);
 
   return (
     <div
@@ -118,22 +150,21 @@ export default () => {
                     <div className="red label colorblindable" />
                   </div>
                   <div className="member-container">
-                    <i className="plus-icon sm-icon" data-popovertype="labels" onClick={handleAddPopover} onClose={onClose} />
-                    {/* SET POPOVER STATE TO LABELS WHEN CLICKED */}
+                    <i className="plus-icon sm-icon" data-popovertype="labels" onClick={handleAddPopover} />
                   </div>
                 </li>
                 <li className="due-date-section">
                   <h3>Due Date</h3>
-                  <div id="dueDateDisplay" className="overdue completed">
+                  <div id="dueDateDisplay" className={dueDateComparison()}>
                     <input
                       id="dueDateCheckbox"
                       type="checkbox"
                       className="checkbox"
                       defaultChecked=""
+
                     />
-                    Aug 4 at 10:42 AM
-                    {' '}
-                    <span>(past due)</span>
+                    {fullDate()}
+                    <span>{isPastDue()}</span>
                   </div>
                 </li>
               </ul>
@@ -182,14 +213,15 @@ export default () => {
           card={card}
           updateCard={update}
           popoverTypeUpdater={handleAddPopover}
-          onClose={onClose}
+          onPopoverClose={onPopoverClose}
         />
       </div>
       <PopoverContainer
         card={card}
+        updateCard={update}
         popoverType={popoverType}
         attachedTo={popoverLocation}
-        onClose={onClose}
+        onPopoverClose={onPopoverClose}
       />
     </div>
   );

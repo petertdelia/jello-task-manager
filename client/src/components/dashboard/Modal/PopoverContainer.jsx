@@ -4,14 +4,14 @@ import CalendarPopover from './CalendarPopover';
 // import Labels from "./Labels"; // this should be another component
 
 const PopoverContainer = ({
-  card, popoverType, attachedTo, onClose,
+  card, popoverType, attachedTo, onPopoverClose, updateCard,
 }) => {
   let child;
   //
 
   switch (popoverType) {
     case 'dueDate':
-      child = <CalendarPopover card={card} onClose={onClose} />;
+      child = <CalendarPopover card={card} onPopoverClose={onPopoverClose} updateCard={updateCard} />;
       break;
     case 'labels':
       break;

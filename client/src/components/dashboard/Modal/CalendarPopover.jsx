@@ -1,22 +1,29 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/button-has-type */
-import moment from 'moment';
 import Pikaday from 'pikaday';
 import React, { useEffect, useState } from 'react';
 
-const CalendarPopover = ({ card, onClose }) => {
-  // use `card` imported above to pass the data around for card
-
+const CalendarPopover = ({ card, updateCard, onPopoverClose }) => {
   const [popover, setPopover] = useState(null);
-
   const handleClose = (e) => {
     e.preventDefault();
-    onClose();
+    onPopoverClose();
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    updateCard({ ...card, dueDate: popover.getDate() });
   };
 
   useEffect(() => {
-    const date = new Date();
-    date.setDate(date.getDate() + 1);
+    let date;
+
+    if (!card.dueDate) {
+      date = new Date();
+      date.setDate(date.getDate() + 1);
+    } else {
+      date = new Date(card.dueDate);
+    }
 
     if (!popover) {
       const newPopover = new Pikaday({
@@ -75,18 +82,18 @@ const CalendarPopover = ({ card, onClose }) => {
             <div className="datepicker-select-date">
               <label>
                 Date
-                <input type="text" placeholder="Enter date" />
+                <input type="text" placeholder="Enter date" autoFocus />
               </label>
             </div>
             <div className="datepicker-select-time">
               <label>
                 Time
-                <input type="text" placeholder="Enter time" value="12:00 PM" />
+                <input type="text" placeholder="Enter time" defaultValue="12:00 PM" />
               </label>
             </div>
             <div id="calendar-widget" />
           </div>
-          <button className="button" type="submit">
+          <button className="button" type="submit" onClick={handleUpdate}>
             Save
           </button>
           <button className="button red-button" type="reset">

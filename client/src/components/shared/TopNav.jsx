@@ -18,11 +18,11 @@ const TopNav = () => (
         </div>
       </li>
     </ul>
-    <h1>Trello</h1>
+    <h1>Jello Task Manager</h1>
     <ul className="user-info">
       <li className="create-icon icon" />
-      <li className="split-button-1">VR</li>
-      <li className="split-button-2">Victor Reyes</li>
+      <li className="split-button-1">NP</li>
+      <li className="split-button-2">NaaP User</li>
       <li className="info-icon icon" />
       <li className="notifications-icon icon" />
     </ul>
