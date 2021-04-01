@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
 
-const Actions = ({ card, updateCard }) => {
+const Sidebar = ({ card, updateCard, popoverTypeUpdater }) => {
   const [isArchived, setIsArchived] = useState(card.archived || false);
 
   const handleToggleArchive = (toArchive) => {
@@ -16,7 +18,7 @@ const Actions = ({ card, updateCard }) => {
           <i className="person-icon sm-icon" />
           Members
         </li>
-        <li className="label-button">
+        <li className="label-button" data-popovertype="labels" onClick={popoverTypeUpdater}>
           <i className="label-icon sm-icon" />
           Labels
         </li>
@@ -24,7 +26,7 @@ const Actions = ({ card, updateCard }) => {
           <i className="checklist-icon sm-icon" />
           Checklist
         </li>
-        <li className="date-button not-implemented">
+        <li className="date-button" data-popovertype="dueDate" onClick={popoverTypeUpdater}>
           <i className="clock-icon sm-icon" />
           Due Date
         </li>
@@ -35,7 +37,7 @@ const Actions = ({ card, updateCard }) => {
       </ul>
       <h2>Actions</h2>
       <ul>
-        <li className="move-button">
+        <li className="move-button" data-popovertype="move" onClick={popoverTypeUpdater}>
           <i className="forward-icon sm-icon" />
           Move
         </li>
@@ -51,13 +53,19 @@ const Actions = ({ card, updateCard }) => {
         <hr />
 
         {!isArchived ? (
-          <li className="archive-button" onClick={() => handleToggleArchive(true)}>
+          <li
+            className="archive-button"
+            onClick={() => handleToggleArchive(true)}
+          >
             <i className="file-icon sm-icon " />
             Archive
           </li>
         ) : (
           <>
-            <li className="unarchive-button" onClick={() => handleToggleArchive(false)}>
+            <li
+              className="unarchive-button"
+              onClick={() => handleToggleArchive(false)}
+            >
               <i className="send-icon sm-icon" />
               Send to board
             </li>
@@ -66,8 +74,7 @@ const Actions = ({ card, updateCard }) => {
               Delete
             </li>
           </>
-        ) }
-
+        )}
       </ul>
       <ul className="light-list">
         <li className="not-implemented">Share and more...</li>
@@ -76,4 +83,4 @@ const Actions = ({ card, updateCard }) => {
   );
 };
 
-export default Actions;
+export default Sidebar;

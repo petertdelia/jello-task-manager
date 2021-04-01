@@ -4,19 +4,28 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCard, updateCard, createComment } from '../../../actions/CardsActions';
+import {
+  fetchCard,
+  updateCard,
+  createComment,
+} from '../../../actions/CardsActions';
 import Sidebar from './Sidebar';
 import CommentsActivities from './CommentsActivities';
 import DescriptionForm from './DescriptionForm';
+import PopoverContainer from './PopoverContainer';
 
 export default () => {
   const focusEl = useRef(null);
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
-  const card = useSelector((state) => state.cards).find((found) => found._id === id);
+  const card = useSelector((state) => state.cards).find(
+    (found) => found._id === id,
+  );
   const [state, setState] = useState({});
   const [newComment, setNewComment] = useState('');
+  const [popoverType, setPopoverType] = useState(null);
+  const [popoverLocation, setPopoverLocation] = useState(null);
 
   const handleTitleChange = ({ target: value }) => setState({ ...state, title: value });
   const handleExitModal = () => history.push(`/boards/${card.boardId}`);
@@ -25,7 +34,9 @@ export default () => {
   };
 
   const handleSaveComment = () => {
-    dispatch(createComment({ cardId: card._id, comment: { text: newComment } }));
+    dispatch(
+      createComment({ cardId: card._id, comment: { text: newComment } }),
+    );
   };
 
   const update = (_card) => {
@@ -35,6 +46,16 @@ export default () => {
 
   const handleTitleBlur = (e) => update({ ...card, title: e.target.value });
 
+  const handleAddPopover = (e) => {
+    setPopoverType(e.target.dataset.popovertype);
+    setPopoverLocation(e.target);
+  };
+
+  const onClose = () => {
+    setPopoverType(null);
+    setPopoverLocation(null);
+  };
+
   useEffect(() => {
     // eslint-disable-next-line no-unused-expressions
     card ? setState(card) : dispatch(fetchCard(id));
@@ -42,16 +63,29 @@ export default () => {
     focusEl.current?.focus();
   }, [dispatch, id, card]);
 
-  if (!card) { return null; }
+  if (!card) {
+    return null;
+  }
 
   return (
-    <div id="modal-container" onKeyDown={handleEscKeyPress} tabIndex="-1" ref={focusEl}>
+    <div
+      id="modal-container"
+      onKeyDown={handleEscKeyPress}
+      tabIndex="-1"
+      ref={focusEl}
+    >
       <div className="screen" onClick={handleExitModal} />
       <div id="modal">
         <i className="x-icon icon close-modal" onClick={handleExitModal} />
         <header>
           <i className="card-icon icon .close-modal" />
-          <textarea className="list-title" style={{ height: '45px' }} defaultValue={state.title} onChange={handleTitleChange} onBlur={handleTitleBlur} />
+          <textarea
+            className="list-title"
+            style={{ height: '45px' }}
+            defaultValue={state.title}
+            onChange={handleTitleChange}
+            onBlur={handleTitleBlur}
+          />
           <p>
             in list
             {' '}
@@ -84,7 +118,8 @@ export default () => {
                     <div className="red label colorblindable" />
                   </div>
                   <div className="member-container">
-                    <i className="plus-icon sm-icon" />
+                    <i className="plus-icon sm-icon" data-popovertype="labels" onClick={handleAddPopover} onClose={onClose} />
+                    {/* SET POPOVER STATE TO LABELS WHEN CLICKED */}
                   </div>
                 </li>
                 <li className="due-date-section">
@@ -102,7 +137,11 @@ export default () => {
                   </div>
                 </li>
               </ul>
-              <DescriptionForm card={state} updateCard={update} setCardState={setState} />
+              <DescriptionForm
+                card={state}
+                updateCard={update}
+                setCardState={setState}
+              />
             </li>
             <li className="comment-section">
               <h2 className="comment-icon icon">Add Comment</h2>
@@ -139,8 +178,19 @@ export default () => {
             <CommentsActivities card={card} />
           </ul>
         </section>
-        <Sidebar card={card} updateCard={update} />
+        <Sidebar
+          card={card}
+          updateCard={update}
+          popoverTypeUpdater={handleAddPopover}
+          onClose={onClose}
+        />
       </div>
+      <PopoverContainer
+        card={card}
+        popoverType={popoverType}
+        attachedTo={popoverLocation}
+        onClose={onClose}
+      />
     </div>
   );
 };
