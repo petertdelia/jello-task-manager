@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/button-has-type */
+import moment from 'moment';
 import Pikaday from 'pikaday';
 import React, { useEffect, useState } from 'react';
 
@@ -14,11 +15,47 @@ const CalendarPopover = ({ card, onClose }) => {
   };
 
   useEffect(() => {
+    const date = new Date();
+    date.setDate(date.getDate() + 1);
+
     if (!popover) {
       const newPopover = new Pikaday({
         field: document.querySelector('.datepicker-select-date input'),
         container: document.querySelector('#calendar-widget'),
         bound: false,
+        firstDay: 1,
+        yearRange: 5,
+        defaultDate: date,
+        setDefaultDate: true,
+        format: 'M/D/YYYY',
+        i18n: {
+          previousMonth: 'Prev',
+          nextMonth: 'Next',
+          months: [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+          ],
+          weekdays: [
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+          ],
+          weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+        },
       });
 
       newPopover.show();
