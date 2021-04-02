@@ -15,6 +15,8 @@ const List = ({ list, active, onAddCard }) => {
     .filter((card) => card.listId === list._id && !card.archived);
 
   const handleBlur = () => {
+    if (list.title === title) { return; }
+
     dispatch(updateList(list._id, title));
   };
 
