@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
 import { updateList, deleteList } from '../../actions/ListsActions';
 import { createCard } from '../../actions/CardsActions';
 
-import Card from './Card';
+import CardsContainer from './Cards/CardsContainer';
 
 const List = ({ list, active, onAddCard }) => {
   const dispatch = useDispatch();
@@ -70,19 +69,7 @@ const List = ({ list, active, onAddCard }) => {
             </div>
           </div>
           <div id="cards-container" data-id="list-3-cards">
-            {cards.sort((a, b) => {
-              if (a.createdAt > b.createdAt) {
-                return 1;
-              } if (a.createdAt < b.createdAt) {
-                return -1;
-              }
-              return 0;
-            }).map((card) => (
-              <Card
-                card={card}
-                key={card._id}
-              />
-            ))}
+            <CardsContainer list={list} cards={cards} />
           </div>
           <div className={`add-dropdown add-bottom ${active ? 'active-card' : ''}`}>
             <div className="card">
