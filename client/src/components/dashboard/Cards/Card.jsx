@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { dueDateComparison, truncatedDate } from '../../utils/dateFormat';
+import { dueDateComparison, truncatedDate } from '../../../utils/dateFormat';
 
 const Card = ({ card }) => {
   const history = useHistory();

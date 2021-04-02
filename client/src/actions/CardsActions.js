@@ -52,3 +52,11 @@ export function createComment(comment, callback) {
     });
   };
 }
+
+export const updateDropPositionSuccess = (cards) => ({ type: 'UPDATE_CARD_POSTION', cards });
+
+export function updateCardDropPosition(dragTarget, dropTarget) {
+  return (dispatch) => {
+    dispatch(updateDropPositionSuccess({ dragTarget, dropTarget }));
+  };
+}
