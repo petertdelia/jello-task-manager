@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import List from './List';
+import DraggableList from './DraggableLists';
+import DropContainer from './DropContainer';
 
 const ExistingLists = ({ id }) => {
   const [activeList, setActiveList] = useState({});
@@ -12,15 +14,26 @@ const ExistingLists = ({ id }) => {
     setActiveList({ [activeId]: true });
   };
 
+  const sortedLists = lists.sort((a, b) => {
+    if (a.position > b.position) {
+      return 1;
+    } if (a.position < b.position) {
+      return -1;
+    }
+    return 0;
+  });
+
   return (
     <DndProvider backend={HTML5Backend}>
-      {lists.map((list) => (
-        <List
-          list={list}
-          key={list._id}
-          active={activeList[list._id]}
-          onAddCard={handleAddCard}
-        />
+      {sortedLists.map((list) => (
+        <DropContainer data={list} active={activeList[list._id]} key={list._id}>
+          <DraggableList
+            list={list}
+            key={list._id}
+            active={activeList[list._id]}
+            onAddCard={handleAddCard}
+          />
+        </DropContainer>
       ))}
     </DndProvider>
   );

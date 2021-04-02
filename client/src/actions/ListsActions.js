@@ -30,3 +30,11 @@ export const deleteList = (id, callback) => (dispatch) => {
     if (callback) { callback(); }
   });
 };
+
+export const updateDropPositionSuccess = (lists) => ({ type: 'UPDATE_LIST_POSITION', lists });
+
+export function updateListDropPosition(dragTarget, dropTarget) {
+  return (dispatch) => {
+    dispatch(updateDropPositionSuccess({ dragTarget, dropTarget }));
+  };
+}
