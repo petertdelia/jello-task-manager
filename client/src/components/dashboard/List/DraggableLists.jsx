@@ -6,7 +6,7 @@ const DraggableCard = ({ list, active, onAddCard }) => {
   // id: card._id, position: card.position, listId: card.listId
   const [{ isDragging }, drag] = useDrag({
     type: 'LIST',
-    item: { id: list._id, position: list.position },
+    item: { _id: list._id, position: list.position },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),

@@ -54,9 +54,9 @@ const apiClient = {
       .then(callback)
       .catch(logError);
   },
-  updateList(_id, title, callback) {
+  updateList(id, data, callback) {
     return axios
-      .put(`${routes.UPDATE_LIST_URL}/${_id}`, { _id, title })
+      .put(`${routes.UPDATE_LIST_URL}/${id}`, data)
       .then(unwrapData)
       .then(callback)
       .catch(logError);
