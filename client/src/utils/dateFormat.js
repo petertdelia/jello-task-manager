@@ -6,10 +6,6 @@ export const truncatedDate = ({ dueDate }) => (
   moment(new Date(dueDate)).format('MMM DD')
 );
 
-export const fullDate = ({ dueDate }) => (
-  `${truncatedDate({ dueDate })} at ${moment(new Date(dueDate)).format('LT')}`
-);
-
 export const dueDateComparison = ({ dueDate }) => {
   const dateDiff = Date.now() - new Date(dueDate);
 

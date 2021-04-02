@@ -86,12 +86,12 @@ const CalendarPopover = ({ card, updateCard, onPopoverClose }) => {
               </label>
             </div>
             {/* Pikaday does NOT support time selection */}
-            <div className="datepicker-select-time">
+            {/* <div className="datepicker-select-time">
               <label>
                 Time
                 <input type="text" placeholder="Enter time" defaultValue="12:00 PM" />
               </label>
-            </div>
+            </div> */}
             <div id="calendar-widget" />
           </div>
           <button className="button" type="submit" onClick={handleUpdate}>

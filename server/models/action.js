@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const CommentSchema = new Schema({
-  text: {
+const ActionSchema = new Schema({
+  description: {
     type: String,
-    required: [true, 'The comment must have some text'],
+    required: [true, 'The action must have some description'],
   },
   cardId: {
     type: Schema.Types.ObjectId,
@@ -15,6 +15,6 @@ const CommentSchema = new Schema({
   versionKey: false,
 }, { timestamps: true });
 
-const Comment = mongoose.model('Comment', CommentSchema);
+const Action = mongoose.model('Action', ActionSchema);
 
-module.exports = Comment;
+module.exports = Action;

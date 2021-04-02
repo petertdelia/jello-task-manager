@@ -15,16 +15,14 @@ const CardSchema = new Schema({
   archived: Boolean,
   dueDate: Date,
   completed: Boolean,
-  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }], // add comments schema later
-  actions: [
-    {
-      _id: Number,
-      description: String,
-      createdAt: Date,
-      updatedAt: Date,
-      cardId: Number,
-    },
-  ],
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Comment',
+  }], // add comments schema later
+  actions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Action',
+  }],
   versionKey: false,
 }, { timestamps: true });
 
