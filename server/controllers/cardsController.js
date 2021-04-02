@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 const HttpError = require('../models/httpError');
 const Card = require('../models/card');
 const List = require('../models/list');
+const Action = require('../models/action');
 
 const getCard = (req, res, next) => {
   Card.findById(req.params.id).populate({ path: 'comments' }).then((card) => {
@@ -51,6 +52,7 @@ const addCommentToCard = (req, res, next) => {
 const updateCard = (req, res, next) => {
   const filter = { _id: req.params.id };
   const update = { ...req.body.card };
+  update.actions = [req.actionID];
   const opts = { returnOriginal: false };
 
   // update.actions = ['changed the background of this board'];
@@ -64,10 +66,71 @@ const updateCard = (req, res, next) => {
   });
 };
 
+// - Due date was changed
+// - Due date was added
+
+// - Due date was removed
+
+// - Completion status was changed
+// - Card was moved to a different list
+// - Card was archived
+// - Card was sent back to the board from the archive
+
+const addAction = (req, res, next) => {
+  const { body } = req;
+
+  const card = Card.findById(req.params.id);
+  const action = {};
+  action.cardId = card._id;
+
+  if (body.dueDate && card.dueDate) {
+    // changed duedate
+    action.description = 'changed the due date';
+  }
+
+  if (body.dueDate && !card.dueDate) {
+    // added duedate
+    action.description = 'added a due date';
+  }
+
+  if (body.completed) {
+    // marked completed
+    action.description = 'marked this card as completed';
+  }
+
+  if (body.completed === false) {
+    // marked as uncompleted
+    action.description = 'marked this card as uncompleted';
+  }
+
+  if (body.listId && body.listId !== card.listId) {
+    // Changed lists
+    action.description = 'moved this card to a different list';
+  }
+
+  if (body.archived) {
+    // archived
+    action.description = 'archived this card';
+  }
+
+  if (body.archived === false) {
+    // sent back to board
+    action.description = 'sent this card back to the board';
+  }
+
+  console.log(action);
+
+  Action.create(action).then((act) => {
+    req.actionID = act._id;
+    next();
+  });
+};
+
 module.exports = {
   getCard,
   createCard,
   deleteCard,
   addCommentToCard,
   updateCard,
+  addAction,
 };

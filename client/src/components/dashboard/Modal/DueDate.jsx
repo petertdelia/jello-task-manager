@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  fullDate, dueDateComparison, isPastDue,
+  truncatedDate, dueDateComparison, isPastDue,
 } from '../../../utils/dateFormat';
 
 const DueDate = ({ card, update }) => {
@@ -17,7 +17,7 @@ const DueDate = ({ card, update }) => {
           defaultChecked={!!card.completed}
           onClick={handleCompletedToggle}
         />
-        {fullDate(card)}
+        {card.dueDate ? truncatedDate(card) : 'Not yet assigned' }
         <span>{isPastDue(card)}</span>
       </div>
     </li>

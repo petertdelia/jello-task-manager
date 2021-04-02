@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoard } from '../../actions/BoardActions';
-import ExistingLists from './ExistingLists';
+import ExistingLists from './List/ExistingLists';
 import NewList from './NewList';
 
 // import CardModal from './CardModal';

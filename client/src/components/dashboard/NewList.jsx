@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createList } from '../../actions/ListsActions';
 
 const NewList = ({ id }) => {
@@ -8,13 +8,20 @@ const NewList = ({ id }) => {
   const [newList, setNewList] = useState('');
   const handleChange = ({ target }) => setNewList(target.value);
   const handleClick = () => setActive(!active);
+  const position = useSelector((state) => state.lists)
+    .filter((list) => list.boardId === id)
+    .reduce((acc, { position: _position }) => (_position > acc ? _position : acc), 0);
 
   const handleSubmit = () => {
     if (newList === '') {
       return;
     }
 
-    dispatch(createList({ title: newList, boardId: id }));
+    dispatch(createList({
+      title: newList,
+      boardId: id,
+      position: position + 1,
+    }));
     setNewList('');
     setActive(false);
   };

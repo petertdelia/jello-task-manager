@@ -1,4 +1,5 @@
 import * as ActionTypes from '../constants/ActionTypes';
+import cards from './cards';
 
 export default (state = [], action) => {
   switch (action.type) {
@@ -14,7 +15,7 @@ export default (state = [], action) => {
       // eslint-disable-next-line no-param-reassign
       finalState.forEach((fs) => delete fs.cards);
 
-      return finalState;
+      return finalState; // .map((list, idx) => ({ ...list, position: idx }));
     }
 
     case ActionTypes.DELETE_LIST_SUCCESS: {
@@ -23,6 +24,20 @@ export default (state = [], action) => {
 
     case ActionTypes.CREATE_LIST_SUCCESS:
       return state.concat(action.list);
+    case 'UPDATE_LIST_POSITION': {
+      const { lists } = action;
+      let tempState = state;
+
+      lists.forEach((list) => {
+        tempState = tempState.filter((stateList) => stateList._id !== list._id);
+      });
+
+      const finalState = tempState.concat(lists).map((list) => ({ ...list }));
+      // eslint-disable-next-line no-param-reassign
+      finalState.forEach((fs) => delete fs.cards);
+
+      return finalState; // .map((list, idx) => ({ ...list, position: idx }));
+    }
     default:
       return state;
   }

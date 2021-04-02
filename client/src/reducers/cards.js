@@ -5,7 +5,6 @@ export default (state = [], action) => {
     case ActionTypes.BOARD_FETCHED: {
       const { lists } = action.board;
       let cards = [];
-      // const tempState = state;
 
       // eslint-disable-next-line no-return-assign
       lists.forEach((list) => cards = cards.concat(list.cards));
@@ -25,6 +24,16 @@ export default (state = [], action) => {
         }
         return card;
       });
+    }
+    case 'UPDATE_CARD_POSTION': {
+      const { cards } = action;
+      let tempState = state;
+
+      cards.forEach((card) => {
+        tempState = tempState.filter((stateList) => stateList._id !== card._id);
+      });
+
+      return tempState.concat(cards);
     }
     default:
       return state;
