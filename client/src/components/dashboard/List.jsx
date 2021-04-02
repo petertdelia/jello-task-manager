@@ -8,11 +8,12 @@ import Card from './Card';
 
 const List = ({ list, active, onAddCard }) => {
   const dispatch = useDispatch();
-  const cards = useSelector((state) => state.cards).filter((card) => card.listId === list._id && !card.archived);
   const [title, setTitle] = useState(list.title);
   const [newCardTitle, setNewCardTitle] = useState('');
-
   const handleChange = ({ target }) => setTitle(target.value);
+
+  const cards = useSelector((state) => state.cards)
+    .filter((card) => card.listId === list._id && !card.archived);
 
   const handleBlur = () => {
     dispatch(updateList(list._id, title));
@@ -95,7 +96,11 @@ const List = ({ list, active, onAddCard }) => {
               <span>...</span>
             </div>
           </div>
-          <div onClick={() => onAddCard(list._id)} className="add-card-toggle" data-position="bottom">
+          <div
+            onClick={() => onAddCard(list._id)}
+            className="add-card-toggle"
+            data-position="bottom"
+          >
             Add a card...
           </div>
         </div>

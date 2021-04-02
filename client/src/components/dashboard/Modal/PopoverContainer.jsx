@@ -1,19 +1,31 @@
 import React from 'react';
 import Popover from '../../shared/Popover';
 import CalendarPopover from './CalendarPopover';
-// import Labels from "./Labels"; // this should be another component
+import LabelsPopover from './LabelPopover';
 
 const PopoverContainer = ({
   card, popoverType, attachedTo, onPopoverClose, updateCard,
 }) => {
   let child;
-  //
 
   switch (popoverType) {
     case 'dueDate':
-      child = <CalendarPopover card={card} onPopoverClose={onPopoverClose} updateCard={updateCard} />;
+      child = (
+        <CalendarPopover
+          card={card}
+          onPopoverClose={onPopoverClose}
+          updateCard={updateCard}
+        />
+      );
       break;
     case 'labels':
+      child = (
+        <LabelsPopover
+          card={card}
+          onClose={onPopoverClose}
+          updateCard={updateCard}
+        />
+      );
       break;
     case 'move':
       break;

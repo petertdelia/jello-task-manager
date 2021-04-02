@@ -53,7 +53,15 @@ const updateCard = (req, res, next) => {
   const update = { ...req.body.card };
   const opts = { returnOriginal: false };
 
-  Card.findOneAndUpdate(filter, update, opts).then((card) => res.json(card));
+  // update.actions = ['changed the background of this board'];
+
+  Card.findOneAndUpdate(filter, update, opts).then((card) => {
+    Card.findById(card._id)
+      .populate({ path: 'comments' })
+      .then((card) => {
+        res.json(card);
+      });
+  });
 };
 
 module.exports = {

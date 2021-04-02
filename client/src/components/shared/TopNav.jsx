@@ -18,7 +18,7 @@ const TopNav = () => (
         </div>
       </li>
     </ul>
-    <h1>Jello Task Manager</h1>
+    <h1>Jello Task Manajer</h1>
     <ul className="user-info">
       <li className="create-icon icon" />
       <li className="split-button-1">NP</li>

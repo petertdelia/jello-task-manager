@@ -85,6 +85,7 @@ const CalendarPopover = ({ card, updateCard, onPopoverClose }) => {
                 <input type="text" placeholder="Enter date" autoFocus />
               </label>
             </div>
+            {/* Pikaday does NOT support time selection */}
             <div className="datepicker-select-time">
               <label>
                 Time
@@ -104,10 +105,5 @@ const CalendarPopover = ({ card, updateCard, onPopoverClose }) => {
     </>
   );
 };
-
-//  defaultDate: moment().add(1, "day").toDate(),
-// toString(date, format) {
-//   return moment(date).format(format);
-// },
 
 export default CalendarPopover;
