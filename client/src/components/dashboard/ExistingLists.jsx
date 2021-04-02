@@ -10,8 +10,14 @@ const ExistingLists = ({ id }) => {
     setActiveList({ [activeId]: true });
   };
 
-  // eslint-disable-next-line max-len
-  return lists.map((list) => <List list={list} key={list._id} active={activeList[list._id]} onAddCard={handleAddCard} />);
+  return lists.map((list) => (
+    <List
+      list={list}
+      key={list._id}
+      active={activeList[list._id]}
+      onAddCard={handleAddCard}
+    />
+  ));
 };
 
 export default ExistingLists;

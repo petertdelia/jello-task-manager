@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { updateList } from '../../actions/ListsActions';
+import { updateList, deleteList } from '../../actions/ListsActions';
 import { createCard } from '../../actions/CardsActions';
 
 import Card from './Card';
 
 const List = ({ list, active, onAddCard }) => {
   const dispatch = useDispatch();
-  const cards = useSelector((state) => state.cards).filter((card) => card.listId === list._id);
   const [title, setTitle] = useState(list.title);
   const [newCardTitle, setNewCardTitle] = useState('');
-
   const handleChange = ({ target }) => setTitle(target.value);
+
+  const cards = useSelector((state) => state.cards)
+    .filter((card) => card.listId === list._id && !card.archived);
 
   const handleBlur = () => {
     dispatch(updateList(list._id, title));
@@ -38,11 +39,18 @@ const List = ({ list, active, onAddCard }) => {
     handleClose();
   };
 
+  const handleDeleteList = () => {
+    if (confirm('Are you sure you want to delete this list?')) {
+      dispatch(deleteList(list._id), () => {
+      });
+    }
+  };
+
   return (
     <div className={`list-wrapper ${active ? 'add-dropdown-active' : ''}`}>
       <div className="list-background">
         <div className="list">
-          <a className="more-icon sm-icon" href="" />
+          <a className="x-icon icon" onClick={handleDeleteList} />
           <div>
             <input
               type="text"
@@ -56,13 +64,20 @@ const List = ({ list, active, onAddCard }) => {
           <div className="add-dropdown add-top">
             <div className="card" />
             <a className="button">Add</a>
-            <i className="x-icon icon" />
+            <i className="more-icon sm-icon" />
             <div className="add-options">
               <span>...</span>
             </div>
           </div>
           <div id="cards-container" data-id="list-3-cards">
-            {cards.map((card) => (
+            {cards.sort((a, b) => {
+              if (a.createdAt > b.createdAt) {
+                return 1;
+              } if (a.createdAt < b.createdAt) {
+                return -1;
+              }
+              return 0;
+            }).map((card) => (
               <Card
                 card={card}
                 key={card._id}
@@ -81,7 +96,11 @@ const List = ({ list, active, onAddCard }) => {
               <span>...</span>
             </div>
           </div>
-          <div onClick={() => onAddCard(list._id)} className="add-card-toggle" data-position="bottom">
+          <div
+            onClick={() => onAddCard(list._id)}
+            className="add-card-toggle"
+            data-position="bottom"
+          >
             Add a card...
           </div>
         </div>

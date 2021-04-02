@@ -5,6 +5,10 @@ export const createListSuccess = (list) => ({
   type: types.CREATE_LIST_SUCCESS,
   list,
 });
+export const deleteListSuccess = (_id) => ({
+  type: types.DELETE_LIST_SUCCESS,
+  _id,
+});
 
 export const createList = (list, callback) => (dispatch) => {
   apiClient.createList(list, (data) => {
@@ -16,6 +20,13 @@ export const createList = (list, callback) => (dispatch) => {
   });
 };
 
-export const updateList = (id, title) => (dispatch) => {
+export const updateList = (id, title) => () => {
   apiClient.updateList(id, title);
+};
+
+export const deleteList = (id, callback) => (dispatch) => {
+  apiClient.deleteList(id, () => {
+    dispatch(deleteListSuccess(id));
+    if (callback) { callback(); }
+  });
 };

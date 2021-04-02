@@ -68,6 +68,34 @@ const apiClient = {
       .then(callback)
       .catch(logError);
   },
+  getCard(id, callback) {
+    return axios
+      .get(`${routes.CARD_INDEX_URL}/${id}`)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
+  updateCard(card, callback) {
+    return axios
+      .put(`${routes.UPDATE_CARD_URL}/${card._id}`, { card })
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
+  createComment(comment, callback) {
+    return axios
+      .post(routes.CREATE_COMMENT_URL, comment)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
+  deleteList(list, callback) {
+    return axios
+      .delete(`${routes.DELETE_LIST_URL}/${list}`)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
 };
 
 export default apiClient;

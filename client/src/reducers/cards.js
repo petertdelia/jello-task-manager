@@ -14,6 +14,18 @@ export default (state = [], action) => {
     }
     case ActionTypes.CREATE_CARD_SUCCESS:
       return state.concat(action.card);
+    case ActionTypes.FETCH_CARD_SUCCESS: {
+      const otherCards = state.filter((card) => card._id !== action.card._id);
+      return otherCards.concat(action.card);
+    }
+    case ActionTypes.CREATE_COMMENT_SUCCESS: {
+      return state.map((card) => {
+        if (card._id === action.comment.cardId) {
+          card.comments = card.comments.concat(action.comment);
+        }
+        return card;
+      });
+    }
     default:
       return state;
   }
