@@ -62,22 +62,6 @@ const deleteList = async (req, res) => {
 const updateList = async (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
-    // let list = await List.findById(req.body._id);
-    // if (!list) {
-    //   res.json({ error: "Can't find list with that ID" })
-    //     .status(404);
-    // }
-
-    // list = { ...list, ...req.body };
-
-    // list.save()
-    //   .then((list) => {
-    //     res.json(list);
-    //   })
-    //   .catch((err) => (
-    //     next(new HttpError('Unable to save list.', 500))
-    //   ));
-
     const query = { _id: req.body._id };
     List.findOneAndUpdate(query, req.body, { returnOriginal: false })
       .then((list) => res.json(list));

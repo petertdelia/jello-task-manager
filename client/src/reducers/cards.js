@@ -5,12 +5,11 @@ export default (state = [], action) => {
     case ActionTypes.BOARD_FETCHED: {
       const { lists } = action.board;
       let cards = [];
-      // const tempState = state;
 
       // eslint-disable-next-line no-return-assign
       lists.forEach((list) => cards = cards.concat(list.cards));
 
-      return cards.map((card, idx) => ({ ...card, position: idx }));
+      return cards;
     }
     case ActionTypes.CREATE_CARD_SUCCESS:
       return state.concat(action.card);
@@ -27,28 +26,14 @@ export default (state = [], action) => {
       });
     }
     case 'UPDATE_CARD_POSTION': {
-      // TODO: Better sorting/swapping algorithm.
+      const { cards } = action;
+      let tempState = state;
 
-      // dragTarget is the card the user is dragging
-      // dropTarget is the target container card we are dropping onto
-      const { dragTarget, dropTarget } = action.cards;
-
-      return state.map((card) => {
-        if (card._id === dragTarget.id) {
-          // 0 is a falsy value
-          card.position = dropTarget.position !== undefined
-            ? dropTarget.position
-            : card.position;
-
-          card.listId = dropTarget.listId;
-        }
-
-        if (card._id === dropTarget._id) {
-          card.position = dragTarget.position;
-        }
-
-        return card;
+      cards.forEach((card) => {
+        tempState = tempState.filter((stateList) => stateList._id !== card._id);
       });
+
+      return tempState.concat(cards);
     }
     default:
       return state;

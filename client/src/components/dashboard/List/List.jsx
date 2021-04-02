@@ -14,6 +14,9 @@ const List = ({ list, active, onAddCard }) => {
   const cards = useSelector((state) => state.cards)
     .filter((card) => card.listId === list._id && !card.archived);
 
+  const newCardPosition = cards
+    .reduce((acc, { position: _position }) => (_position > acc ? _position : acc), 0);
+
   const handleBlur = () => {
     if (list.title === title) { return; }
 
@@ -36,7 +39,13 @@ const List = ({ list, active, onAddCard }) => {
   };
 
   const handleCreateCard = () => {
-    dispatch(createCard({ title: newCardTitle, listId: list._id }));
+    dispatch(
+      createCard({
+        title: newCardTitle,
+        listId: list._id,
+        position: newCardPosition + 1,
+      }),
+    );
     handleClose();
   };
 

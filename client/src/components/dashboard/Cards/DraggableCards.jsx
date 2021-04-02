@@ -5,7 +5,7 @@ import Card from './Card';
 const DraggableCard = ({ card }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'CARD',
-    item: { id: card._id, position: card.position, listId: card.listId },
+    item: { _id: card._id, position: card.position, listId: card.listId },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
