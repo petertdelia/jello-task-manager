@@ -1,4 +1,10 @@
-# Reaction App
+# Jello Task Manager
+
+A kanban board application built with React, Redux, ExpressJS and MongoDB. Users can add boards, lists, and cards. They can also add comments, descriptions, labels, and due dates to cards. Finally, it implements drag and drop functionality for lists and cards.
+
+## Views
+
+![board view](images/board-view.png)
 
 ## Setup
 1. Install [Node.js](https://nodejs.org/en/download/package-manager/) if you haven't already
